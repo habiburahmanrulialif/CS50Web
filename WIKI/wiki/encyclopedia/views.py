@@ -22,5 +22,9 @@ def entry(request, entry):
     })
 
 
-def add_page(request):
-    return render(request, "encyclopedia/add-page.html")
+def new_page(request):
+    return render(request, "encyclopedia/new-page.html")
+
+
+def search(request):
+    find = entry(request)
