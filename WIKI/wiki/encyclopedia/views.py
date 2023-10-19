@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+import random
 from . import util
 
 import markdown2
@@ -71,4 +71,14 @@ def search(request):
     return render(request, "encyclopedia/entry-page.html", {
         "title": querry,
         "entries": text.convert(util.get_entry(querry))
+    })
+
+
+def random_page(request):
+    title = util.list_entries()
+    title = random.choice(title)
+    text = markdown2.Markdown()
+    return render(request, "encyclopedia/entry-page.html", {
+        "title": title,
+        "content": text.convert(util.get_entry(title))
     })
