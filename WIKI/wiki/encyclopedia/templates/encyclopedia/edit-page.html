@@ -10,10 +10,10 @@
     <form action="{% url 'new_page' %}" method="POST">
         {% csrf_token %}
         <div>
-            <input type="text" placeholder="Page Title" name="title">
+            <input type="hidden" placeholder="Page Title" name="title" value="{{ title }}">
         </div>
         <div class="my-3">
-            <textarea rows="4" cols="50" name="content"></textarea>
+            <textarea rows="4" cols="50" name="content" >{{ content|safe }}</textarea>
         </div>
         <input type="submit" value="Submit">
     </form>

@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block body %}
-
-    {{ entries|safe }}
-
+    <h1>{{ title }}</h1>
+    {{ content|safe }}
+    <form action="{% url 'edit_page' title=title %}">
+        <input type="hidden" name="title">
+        <input type="submit" value="edit page">
+    </form>
 {% endblock %}

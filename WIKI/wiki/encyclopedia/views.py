@@ -13,20 +13,40 @@ def index(request):
     })
 
 
-def entry(request, entry):
-    if util.get_entry(entry) is None:
-        return render(request, "encyclopedia/entry-page.html", {
-        "title": entry,
-    })    
+def entry(request, title):
+    if util.get_entry(title) is None:
+        return render(request, "encyclopedia/404.html") 
     text = markdown2.Markdown()
     return render(request, "encyclopedia/entry-page.html", {
-        "title": entry,
-        "entries": text.convert(util.get_entry(entry))
+        "title": title,
+        "content": text.convert(util.get_entry(title))
     })
 
 
 def new_page(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        util.save_entry(title, content)
+        return render(request, "encyclopedia/index.html", {
+            "entries": util.list_entries()
+        })
     return render(request, "encyclopedia/new-page.html")
+
+
+def edit_page(request, title):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        util.save_entry(title, content)
+        return render(request, "encyclopedia/index.html", {
+            "entries": util.list_entries()
+        })
+    content = util.get_entry(title)
+    return render(request, "encyclopedia/edit-page.html",{
+        "content": content,
+        "title": title
+    })
 
 
 def search(request):
@@ -38,7 +58,7 @@ def search(request):
         entry = [i for i in entries if querry in i]
         if entry:
             return render(request, "encyclopedia/index.html", {
-        "entries": entry
+                "entries": entry
             })
         
         '''
