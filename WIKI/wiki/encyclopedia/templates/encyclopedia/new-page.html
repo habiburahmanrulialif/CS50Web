@@ -6,7 +6,14 @@
 
 {% block body %}
     <h1>Please input new page that you want</h1>
-
+    {% if warning %}
+    <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">Alert Heading</h4>
+        <p>Page Already Exist</p>
+        <hr>
+        <p class="mb-0">Please input another page or edit the page that already exist</p>
+    </div>
+    {% endif %}
     <form action="{% url 'new_page' %}" method="POST">
         {% csrf_token %}
         <div>

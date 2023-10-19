@@ -27,10 +27,17 @@ def new_page(request):
     if request.method == "POST":
         title = request.POST.get('title')
         content = request.POST.get('content')
-        util.save_entry(title, content)
-        return render(request, "encyclopedia/index.html", {
-            "entries": util.list_entries()
-        })
+        if title in util.list_entries():
+            return render(request, "encyclopedia/new-page.html",{
+                "warning": True
+            })
+        else:
+            util.save_entry(title, content)
+            text = markdown2.Markdown()
+            return render(request, "encyclopedia/entry-page.html", {
+            "title": title,
+            "content": text.convert(util.get_entry(title))
+            })
     return render(request, "encyclopedia/new-page.html")
 
 
@@ -50,8 +57,8 @@ def edit_page(request, title):
 
 
 def search(request):
-    querry = request.GET.get('q')
-    querry = querry.upper()
+    q = request.GET.get('q')
+    querry = q.upper()
     if util.get_entry(querry) is None:
         entries = util.list_entries()
         entries = all_upper(entries)
@@ -65,12 +72,10 @@ def search(request):
         Should return 404 page
         '''
         return render(request, "encyclopedia/404.html")
-    
-    
     text = markdown2.Markdown()
     return render(request, "encyclopedia/entry-page.html", {
         "title": querry,
-        "entries": text.convert(util.get_entry(querry))
+        "content": text.convert(util.get_entry(q))
     })
 
 
