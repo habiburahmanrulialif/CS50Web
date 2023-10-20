@@ -27,6 +27,10 @@ def new_page(request):
     if request.method == "POST":
         title = request.POST.get('title')
         content = request.POST.get('content')
+        if not title or not content:
+            return render(request, "encyclopedia/new-page.html",{
+                "fieldWarning": True
+            })
         if title in util.list_entries():
             return render(request, "encyclopedia/new-page.html",{
                 "warning": True
