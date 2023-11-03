@@ -2,6 +2,13 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-
+    {% for list in listing %}
+        <div class="container-fluid">
+            list.title
+            list.image
+            list.description
+            list.currentPrice
+        </div>
+    {% endfor %}
     TODO
 {% endblock %}

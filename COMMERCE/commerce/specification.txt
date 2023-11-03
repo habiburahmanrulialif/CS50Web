@@ -1,0 +1,46 @@
+SPEC:
+1. atleast 3 model excluding user.
+	-> model for auction listing
+	-> model for bids
+	-> model for commend on each listing
+	-> allowed to have more model
+2. user should be able to create listing
+	<-> listing must consist of :
+		-> Title (name of the item)
+		-> Description for the item
+		-> Starting bid 
+	<-> Conditional : Should be able to upload image for that item
+	<-> Additional : Create category for the item so its easier to find
+3. active auction list (index)
+	-> by default web should show the current active listing (without login)
+	<-> for each listing should display:
+		-> title
+		-> desctiption
+		-> current price (bid/the highest bid)
+		-> additional photo/image (if exist)
+4. By clicking the listed item, user should be redirected to the item list page:
+	<-> if user is signed in :
+		-> able to add item onto watchlist. If the item already on watchlist, able to remove it
+		-> able to put bid on the item. bid must be atleast the same as the starting bid or higher than 
+		   other bid (if exist). If criteria is not meet, show error
+		-> If the user is the one crating the list, then user able to close the auction and make the highest
+		   bidder the winner of those bid. And the listing should be closed (finish)
+		-> If the user that won the auction click on the closed list the page should say so
+		-> User should be able to comment on the listing page, and all the comment should be shown
+	<-> if user not singed in :
+		-> show listing
+			-> title
+			-> desctiption
+			-> current price (bid/the highest bid)
+			-> additional photo/image (if exist)
+		-> show comment
+		-> if the listing is closed, show the winner
+5. Watchlist (for user that has signed in):	
+	-> diplay all item on watchlist
+	-> clicking on any listed item should redirect user into those item page
+6. Category:
+	-> User should be able to choose category of item, clicking on those category would redirect user into
+	   active listing that has that category.
+7. Admin interface:
+	-> site admin should be able to view, add, edit, and delete any listing, comment, and bid that are made on 	   the site 
+		
