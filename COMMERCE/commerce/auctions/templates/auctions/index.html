@@ -2,13 +2,23 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    {% for list in listing %}
-        <div class="container-fluid">
-            list.title
-            list.image
-            list.description
-            list.currentPrice
+    <div class="container-fluid border">
+        <div class="row">
+            <div class="col-md-3 p-2 bg-image hover-zoom">
+                <img src="https://picsum.photos/id/233/600/600" class="img-fluid rounded" alt="">
+            </div>
+            <div class="col-md-9">
+                <h1>TITLE</h1>
+                <div>
+                    time
+                </div>
+                <div class="mt-2">
+                    {% lorem how_many_paragraphs %}
+                </div>
+                <div>
+                    price
+                </div>
+            </div>
         </div>
-    {% endfor %}
-    TODO
+    </div>
 {% endblock %}
