@@ -2,21 +2,17 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <div class="container-fluid border">
-        <div class="row">
-            <div class="col-md-3 p-2 bg-image hover-zoom">
-                <img src="https://picsum.photos/id/233/600/600" class="img-fluid rounded" alt="">
+    <div class="card border-primary mb-3">
+        <div class="row g-0">
+            <div class="col-md-3 p-2 center border align-item-center">
+                <img src="https://images.pexels.com/photos/574073/pexels-photo-574073.jpeg?auto=compress&cs=tinysrgb&w=1600" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
             </div>
             <div class="col-md-9">
-                <h1>TITLE</h1>
-                <div>
-                    time
-                </div>
-                <div class="mt-2">
-                    {% lorem how_many_paragraphs %}
-                </div>
-                <div>
-                    price
+                <div class="card-body">
+                    <h3 class="card-title">Card title</h3>
+                    <p class="card-text">PRICE</p>
+                    <p class="card-text">{% lorem how_many_paragraphs %}</p>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                 </div>
             </div>
         </div>

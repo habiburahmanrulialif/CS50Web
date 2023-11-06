@@ -1,3 +1,16 @@
 body {
     padding: 10px;
+    height: 100%;
+    border: black;
+}
+
+.list-sizing {
+    max-height: 20rem;
+    display: block;
+}
+
+.card {
+    min-height: 20,5rem;
+    max-height: 20,5rem;
+    
 }
