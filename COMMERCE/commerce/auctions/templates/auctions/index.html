@@ -11,8 +11,9 @@
                 <div class="card-body">
                     <h3 class="card-title">Card title</h3>
                     <p class="card-text">PRICE</p>
-                    <p class="card-text">{% lorem how_many_paragraphs %}</p>
+                    <p class="card-text text-limit">{% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %}</p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <a href="{% url 'listing' %}" class="btn btn-primary stretched-link">Check Out The Bid</a>
                 </div>
             </div>
         </div>

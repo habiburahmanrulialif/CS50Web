@@ -14,3 +14,10 @@ body {
     max-height: 20,5rem;
     
 }
+
+.text-limit {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
