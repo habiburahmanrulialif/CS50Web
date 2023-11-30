@@ -1,14 +1,47 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
-    {% for list in listing %}
-    <div class="container-fluid">
-        list.title
-        list.image
-        list.description
-        list.currentPrice
+    <div class="card mb-3 mx-auto border-0" style="width: 80%;">
+        <div class="row g-0">
+            <div class="col-md-4 my-auto mx-auto">
+                <img src="https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=1600" class="img-fluid list-sizing rounded mx-auto my-auto border p-2" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body border">
+                    <h3 class="card-title">Card title</h3>
+                    <div class="row pb-2">
+                        <div class="col-md-5 " style="color: red;">
+                            CLOSED
+                        </div>
+                        <div class="col-md-5">
+                            owner
+                        </div>
+                        <div class="col-md-2">
+                            wishlist
+                        </div>
+                    </div>
+                    <p class="card-text text-limit">{% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %}</p>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <a href="{% url 'listing' %}" class="btn btn-primary">Check Out The Bid</a>
+                </div>
+            </div>
+        </div>
     </div>
-{% endfor %}
-    TODO
+
+    <div class="container">
+        <div class="text-center border-bottom">
+            <h2>
+                COMMENT
+            </h2>
+        </div>
+        <div class="border-bottom p-2">
+            ADD COMMENT
+        </div>
+        <div>
+            {% comment %}
+                repeat each comment
+            {% endcomment %}
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam rerum illum ad labore doloremque numquam iste saepe, corrupti vel dicta perferendis cupiditate in unde, ipsam, commodi quae quibusdam cum aspernatur.
+        </div>
+    </div>
 {% endblock %}
