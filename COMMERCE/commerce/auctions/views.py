@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User, listing as listing_2
+from django.http import Http404
 
 
 def index(request):
@@ -12,7 +13,11 @@ def index(request):
 
 
 def listing(request):
-    return render(request, "auctions/listing.html")
+    lisiting_1 = listing_2.objects.get(pk=6)
+    if lisiting_1 is not None:
+        return render(request, "auctions/listing.html", {'listing': lisiting_1})
+    else:
+        raise Http404('List does not exist')
 
 
 def login_view(request):

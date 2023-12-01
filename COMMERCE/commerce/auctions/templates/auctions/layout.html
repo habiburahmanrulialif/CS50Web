@@ -9,7 +9,7 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
         <title>{% block title %}Auctions{% endblock %}</title>
     </head>
-    <body>
+    <body class="p-2">
         <h1>Auctions</h1>
         <div>
             {% if user.is_authenticated %}
@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'index' %}">Watchlist</a>
-            </li>
+            </li>   
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'index' %}">Create Listing</a>
             </li>

@@ -11,7 +11,7 @@ SPEC:
 		-> Starting bid 
 	<-> Conditional : Should be able to upload image for that item
 	<-> Additional : Create category for the item so its easier to find
-3. active auction list (index)
+3. active auction list (index) <done>
 	-> by default web should show the current active listing (without login)
 	<-> for each listing should display:
 		-> title
