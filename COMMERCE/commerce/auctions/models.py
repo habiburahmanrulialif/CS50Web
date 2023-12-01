@@ -29,3 +29,4 @@ class listing(models.Model):
     price = models.IntegerField()
     desc = models.TextField(default='No Descriptions')
     image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename)
+    status = models.BooleanField(default=True)

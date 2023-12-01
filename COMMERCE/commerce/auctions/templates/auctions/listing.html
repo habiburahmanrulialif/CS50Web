@@ -4,7 +4,7 @@
     <div class="card mb-3 mx-auto border-0" style="width: 80%;">
         <div class="row g-0">
             <div class="col-md-4 my-auto mx-auto">
-                <img src="{{listing.image}}" class="img-fluid list-sizing rounded mx-auto my-auto border p-2" alt="...">
+                <img src="{{listing.image.url}}" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
             </div>
             <div class="col-md-8">
                 <div class="card-body border">
@@ -22,7 +22,7 @@
                     </div>
                     <p class="card-text text-limit">{% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %}</p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                    <a href="{% url 'listing' %}" class="btn btn-primary">Check Out The Bid</a>
+                    <a href="{% url 'listing' id=listing.id%}" class="btn btn-primary">Check Out The Bid</a>
                 </div>
             </div>
         </div>

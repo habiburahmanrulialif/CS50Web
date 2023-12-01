@@ -12,8 +12,8 @@ def index(request):
     return render(request, "auctions/index.html", {'listing' : auction})
 
 
-def listing(request):
-    lisiting_1 = listing_2.objects.get(pk=6)
+def listing(request, id):
+    lisiting_1 = listing_2.objects.get(id=id)
     if lisiting_1 is not None:
         return render(request, "auctions/listing.html", {'listing': lisiting_1})
     else:
