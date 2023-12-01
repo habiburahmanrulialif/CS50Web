@@ -2,7 +2,7 @@ SPEC:
 1. atleast 3 model excluding user.
 	-> model for auction listing
 	-> model for bids
-	-> model for commend on each listing
+	-> model for comment on each listing
 	-> allowed to have more model
 2. user should be able to create listing
 	<-> listing must consist of :

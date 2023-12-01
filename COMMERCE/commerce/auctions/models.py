@@ -23,10 +23,21 @@ def path_and_rename(instance, filename):
     # return the whole path to the file
     return os.path.join(upload_to, filename)
 
+class category(models.Model):
+    categoryName = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.categoryName
+
 
 class listing(models.Model):
     name = models.CharField(max_length=64)
-    price = models.IntegerField()
     desc = models.TextField(default='No Descriptions')
     image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename)
+    # Booleanfield default = true, which mean listing still open. And False when listing closed
     status = models.BooleanField(default=True)
+    owner = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True)
+    category = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.name) 

@@ -5,11 +5,16 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import User, listing as listing_2
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
     auction = listing_2.objects.all()
     return render(request, "auctions/index.html", {'listing' : auction})
+
+
+def create(request):
+    return render(request, "auctions/create.html")
 
 
 def listing(request, id):
