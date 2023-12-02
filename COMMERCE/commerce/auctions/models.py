@@ -30,6 +30,12 @@ class category(models.Model):
         return self.categoryName
 
 
+class bid(models.Model):
+
+    bid_amout = models.IntegerField()
+    bidder = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE)
+
+
 class listing(models.Model):
     name = models.CharField(max_length=64)
     desc = models.TextField(default='No Descriptions')
@@ -37,7 +43,8 @@ class listing(models.Model):
     # Booleanfield default = true, which mean listing still open. And False when listing closed
     status = models.BooleanField(default=True)
     owner = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True)
-    category = models.CharField(max_length=50, blank=True, null=True)
+    category = models.ForeignKey("category", on_delete=models.CASCADE, blank=True, null=True)
+    date_post = models.DateTimeField(auto_now_add=True,blank=True, null=True)
 
     def __str__(self):
         return str(self.name) 

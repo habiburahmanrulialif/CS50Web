@@ -1,7 +1,21 @@
 SPEC:
 1. atleast 3 model excluding user.
 	-> model for auction listing
+		- name ok
+		- image ok
+		- category - category ok
+		- owner ok
+		- starting price ok
+		- highest bid -bid
+		- winner - bid
+		- time posted ok
+		- status ok
+		- desctiption ok
+		
 	-> model for bids
+		-item
+		- bidder
+		- bid amount
 	-> model for comment on each listing
 	-> allowed to have more model
 2. user should be able to create listing
