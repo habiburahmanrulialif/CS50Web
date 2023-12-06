@@ -1,5 +1,28 @@
 {% extends "auctions/layout.html" %}
-
+{% load widget_tweaks %}
 {% block body %}
-    
+    <div class="container">
+        <h1 class="p-2">Create your listing</h1>
+        <form action="{% url "create" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% with WIDGET_ERROR_CLASS='my_error' WIDGET_REQUIRED_CLASS='my_required' %}
+                <div>
+                    {% render_field form.name class+="form-control m-2" placeholder="Please input title" %}
+                </div>
+                <div>
+                    {% render_field form.desc class+="form-control m-2" placeholder="Please input item description" %}
+                </div>
+                <div>
+                    {% render_field form.image class+="form-control m-2" %}
+                </div>
+                <div>
+                    {% render_field form.category class+="form-control m-2" %}
+                </div>
+                <div>
+                    {% render_field form.starting_price class+="form-control m-2" placeholder="Please input starting price" %}
+                </div>
+            {% endwith %}
+            <button type="submit" class="m-2">submit</button>
+        </form>
+    </div>
 {% endblock %}

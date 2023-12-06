@@ -8,6 +8,7 @@ from uuid import uuid4
 
 
 class User(AbstractUser):
+    watchlist = models.ManyToManyField("listing")
     pass
 
 
@@ -34,17 +35,36 @@ class bid(models.Model):
 
     bid_amout = models.IntegerField()
     bidder = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE)
+    bid_listing = models.ForeignKey("listing", on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.bidder}'
+    
 
 
 class listing(models.Model):
     name = models.CharField(max_length=64)
-    desc = models.TextField(default='No Descriptions')
+    desc = models.TextField(blank=True, null=True)
     image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename)
     # Booleanfield default = true, which mean listing still open. And False when listing closed
     status = models.BooleanField(default=True)
     owner = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True)
     category = models.ForeignKey("category", on_delete=models.CASCADE, blank=True, null=True)
     date_post = models.DateTimeField(auto_now_add=True,blank=True, null=True)
+    winner = models.ForeignKey("bid", on_delete=models.CASCADE, blank=True, null=True)
+    starting_price = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return str(self.name) 
+
+
+class comment(models.Model):
+    commenter = models.ForeignKey("User", on_delete=models.CASCADE)
+    comment = models.TextField()
+    post_date = models.TimeField(auto_now_add=True)
+    comment_listing = models.ForeignKey("listing", on_delete=models.CASCADE)
+    comment_listing_id = comment_listing.name
+
+    def __str__(self):
+        return f'{self.commenter}'
+    

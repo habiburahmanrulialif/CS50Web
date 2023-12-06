@@ -3,18 +3,34 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import User, listing as listing_2
+from .models import User, comment, bid, listing as listing_2
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
+from .forms import listingForm
 
 
 def index(request):
     auction = listing_2.objects.all()
     return render(request, "auctions/index.html", {'listing' : auction})
 
-
+@login_required
 def create(request):
-    return render(request, "auctions/create.html")
+    if request.method == "GET":
+        form = listingForm()
+        return render(request, "auctions/create.html", {'form': form})
+    else:
+        form = listingForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.save()
+        return HttpResponseRedirect(reverse("index"))   
+
+
+@login_required
+def yourAuction(request):
+    auction = listing_2.objects.filter(owner=request.user)
+    return render(request, "auctions/yourAuction.html", {'listing' : auction})
 
 
 def listing(request, id):
