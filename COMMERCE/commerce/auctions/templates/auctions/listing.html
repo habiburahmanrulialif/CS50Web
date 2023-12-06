@@ -1,5 +1,5 @@
 {% extends "auctions/layout.html" %}
-
+{% load widget_tweaks %}
 {% block body %}
     <div class="card mb-3 mx-auto border-0" style="width: 80%;">
         <div class="row g-0">
@@ -22,7 +22,16 @@
                     </div>
                     <p class="card-text text-limit">{% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %}</p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                    <a href="{% url 'listing' id=listing.id%}" class="btn btn-primary">Check Out The Bid</a>
+                    <form action="{% url "listing" id=listing.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% with WIDGET_ERROR_CLASS='my_error' WIDGET_REQUIRED_CLASS='my_required' %}
+                            <div>
+                                {% render_field bidForm.bid_amount class+="form-control m-2" placeholder="Please input your bid" %}
+                                <button type="submit" class="m-2">submit</button>
+                            </div>
+                        {% endwith %}
+                        
+                    </form>
                 </div>
             </div>
         </div>
@@ -35,13 +44,29 @@
             </h2>
         </div>
         <div class="border-bottom p-2">
-            ADD COMMENT
+            <form action="{% url "listing" id=listing.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% with WIDGET_ERROR_CLASS='my_error' WIDGET_REQUIRED_CLASS='my_required' %}
+                    <div>
+                        {% render_field commentForm.comment class+="form-control m-2" placeholder="Add Comment" %}
+                        <button type="submit" class="m-2">submit</button>
+                    </div>
+                {% endwith %}
+                
+            </form>
         </div>
         <div>
-            {% comment %}
-                repeat each comment
-            {% endcomment %}
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam rerum illum ad labore doloremque numquam iste saepe, corrupti vel dicta perferendis cupiditate in unde, ipsam, commodi quae quibusdam cum aspernatur.
+            {% for comment in comments %}
+                <div class="m-2">
+                    <strong>
+                        {{ comment.commenter }} - {{comment.post_date}}
+                    </strong>
+                    <br/>
+                    <br/>
+                    -    >{{ comment.comment }}
+                </div>
+            {% endfor %}
+            <hr/>
         </div>
     </div>
 {% endblock %}

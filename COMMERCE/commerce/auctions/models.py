@@ -33,7 +33,7 @@ class category(models.Model):
 
 class bid(models.Model):
 
-    bid_amout = models.IntegerField()
+    bid_amount = models.IntegerField()
     bidder = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE)
     bid_listing = models.ForeignKey("listing", on_delete=models.CASCADE, blank=True, null=True)
 
@@ -48,10 +48,10 @@ class listing(models.Model):
     image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename)
     # Booleanfield default = true, which mean listing still open. And False when listing closed
     status = models.BooleanField(default=True)
-    owner = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True, related_name='owner')
     category = models.ForeignKey("category", on_delete=models.CASCADE, blank=True, null=True)
     date_post = models.DateTimeField(auto_now_add=True,blank=True, null=True)
-    winner = models.ForeignKey("bid", on_delete=models.CASCADE, blank=True, null=True)
+    winner = models.ForeignKey("user", on_delete=models.CASCADE, blank=True, null=True, related_name='winner')
     starting_price = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
@@ -66,5 +66,5 @@ class comment(models.Model):
     comment_listing_id = comment_listing.name
 
     def __str__(self):
-        return f'{self.commenter}'
+        return f'{self.commenter} - { self.comment_listing}'
     

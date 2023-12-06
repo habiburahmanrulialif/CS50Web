@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <form action="{% url "category" %}" method="post">
+        {% csrf_token %}
+        <label for="cars">Choose a category:</label>
+        <select id="choices" name="choices">
+            {% for choice in category %}
+                <option value="{{choice.id}}">{{choice.categoryName}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </form>
+
+    <div class="container">
+        {% for list in listing %}
+        <div class="card border-primary mx-auto m-3" style="width: 90%">
+            <div class="row g-0">
+                <div class="col-md-3 p-2 center border align-item-center">
+                    <img src="{{list.image.url}}" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h1 class="card-title">{{list.name}}</h1>
+                        {% if list.status %}
+                        <p class="card-text" style="color: green;">OPEN</p>
+                        {% else %}
+                        <p class="card-text" style="color: red;">CLOSED</p>
+                        {% endif %}
+                        <p class="card-text">${{list.starting_price}}</p>
+                        <p class="card-text text-limit">{{list.desc}}</p>
+                        <p class="card-text"><small class="text-body-secondary">Posted at {{list.date_post}}</small></p>
+                        <a href="{% url 'listing' id=list.id%}" class="btn btn-primary stretched-link">Check Out The Bid</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    
+{% endblock %}
