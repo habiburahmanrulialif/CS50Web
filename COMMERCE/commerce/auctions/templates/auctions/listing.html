@@ -10,28 +10,62 @@
                 <div class="card-body border">
                     <h3 class="card-title">{{listing.name}}</h3>
                     <div class="row pb-2">
-                        <div class="col-md-5 " style="color: red;">
+                        {% if listing.status %}
+                        <div class="col-md-10 " style="color: green;">
+                            Price : ${{listing.starting_price}}
+                        </div>
+                        {% else %}
+                        <div class="col-md-10 " style="color: red;">
                             CLOSED
                         </div>
-                        <div class="col-md-5">
-                            owner
-                        </div>
+                        {% endif %}
                         <div class="col-md-2">
-                            wishlist
+                            {% if owner %}
+                                <a
+                                    name=""
+                                    id=""
+                                    class="btn btn-primary"
+                                    href="{% url "unlist" id=listing.id%}"
+                                    role="button"
+                                    >Close listing</a
+                                >
+                            {% else  %}
+                                <a
+                                    name=""
+                                    id=""
+                                    class="btn btn-primary"
+                                    href="{% url "wish" id=listing.id%}"
+                                    role="button"
+                                    >Watchlist</a
+                                >
+                            {% endif %}
                         </div>
                     </div>
                     <p class="card-text text-limit">{% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %} {% lorem how_many_paragraphs %}</p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                    <form action="{% url "listing" id=listing.id %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% with WIDGET_ERROR_CLASS='my_error' WIDGET_REQUIRED_CLASS='my_required' %}
-                            <div>
-                                {% render_field bidForm.bid_amount class+="form-control m-2" placeholder="Please input your bid" %}
-                                <button type="submit" class="m-2">submit</button>
-                            </div>
-                        {% endwith %}
+                    {% if listing.status %}
+                        <form action="{% url "listing" id=listing.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% with WIDGET_ERROR_CLASS='my_error' WIDGET_REQUIRED_CLASS='my_required' %}
+                                <div>
+                                    {% render_field bidForm.bid_amount class+="form-control m-2" placeholder="Please input your bid" %}
+                                    <button type="submit" class="m-2">submit</button>
+                                </div>
+                            {% endwith %}
+                        </form>
+                    {% else %}
+                        {% if winning %}
+                        <div class="col-md-5 " style="color: green;">
+                            Your are the winner of this auction!
+                        </div>
+                        {% else %}
+                        <div class="col-md-5 " style="color: green;">
+                            The item already been sold. <br/>The winner of this auction is : {{ listing.winner }}
+                        </div>
+                        {% endif %}
                         
-                    </form>
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>
@@ -61,7 +95,6 @@
                     <strong>
                         {{ comment.commenter }} - {{comment.post_date}}
                     </strong>
-                    <br/>
                     <br/>
                     -    >{{ comment.comment }}
                 </div>

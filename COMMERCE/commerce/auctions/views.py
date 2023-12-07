@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import User, comment, bid, category as categorys, listing as listing_2
 from django.http import Http404
@@ -14,14 +14,6 @@ def index(request):
     return render(request, "auctions/index.html", {'listing' : auction})
 
 
-
-
-@login_required
-def yourAuction(request):
-    auction = listing_2.objects.filter(owner=request.user)
-    return render(request, "auctions/yourAuction.html", {'listing' : auction})
-
-
 def Category(request):
     if request.method == "POST":
         instance = categorys.objects.all()
@@ -31,6 +23,102 @@ def Category(request):
     else:
         instance = categorys.objects.all()
         return render(request, "auctions/category.html", {'category' : instance})
+
+
+def listing(request, id):
+    listing_1 = listing_2.objects.get(id=id)
+    commentList = comment.objects.filter(comment_listing = listing_1)
+    if request.user == listing_1.owner:
+        owner = True
+    else:
+        owner = False
+    
+    if request.user == listing_1.winner:
+        winning = True
+    else:
+        winning = False
+    if request.method == "GET":
+        biddingForm = bidForm()
+        commentingForm = commentForm()
+        if listing_1 is not None:
+            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+        else:
+            raise Http404('List does not exist')
+    else:
+        biddingForm = bidForm(request.POST)
+        commentingForm = commentForm(request.POST)
+        if biddingForm.is_valid():
+            instance = biddingForm.save(commit=False)
+            if request.user == listing_1.owner:
+                messages.error(request, 'You cant bid on your own auction')
+                return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+            else:
+                if instance.bid_amount <= listing_1.starting_price:
+                    messages.error(request, 'please bid more than the price of the item')
+                    return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+                else:
+                    instance.bidder = request.user
+                    instance.bid_listing = listing_1
+                    instance.save()
+                    listing_1.starting_price = instance.bid_amount
+                    listing_1.winner = request.user
+                    listing_1.save()
+                    messages.success(request, 'Bid succesfully add')
+                    return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+        elif commentingForm.is_valid():
+            instance = commentingForm.save(commit=False)
+            instance.commenter = request.user
+            instance.comment_listing = listing_1
+            instance.save()
+            messages.success(request, 'comment added!')
+            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+        
+        
+        else:
+            messages.error(request, 'something wrong')
+            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+
+
+def unlist(request, id):
+    wish_1 = get_object_or_404(listing_2, id=id)
+    wish_1.status = False
+    wish_1.save()
+    messages.success(request, 'Item listing succesfully closed.')
+    return HttpResponseRedirect(reverse('listing',kwargs={
+            'id': id,
+        }))
+
+
+@login_required
+def wish(request, id):
+    wish_1 = get_object_or_404(listing_2, id=id)
+    wish_2 = request.user.wishlist.all()
+    if wish_1 in wish_2:
+        request.user.wishlist.remove(wish_1)
+        request.user.save()
+        messages.success(request, 'Item succesfully added to watchlist!')
+        return HttpResponseRedirect(reverse('listing',kwargs={
+                'id': id
+            }))
+    else:
+        request.user.wishlist.add(wish_1)
+        request.user.save()
+        messages.success(request, 'Item succesfully remove from watchlist!')
+        return HttpResponseRedirect(reverse('listing',kwargs={
+                'id': id
+            }))
+
+
+@login_required
+def wishlist(request):
+    auction = request.user.wishlist.all()
+    return render(request, "auctions/index.html", {'listing' : auction})
+
+
+@login_required
+def yourAuction(request):
+    auction = listing_2.objects.filter(owner=request.user)
+    return render(request, "auctions/yourAuction.html", {'listing' : auction})
 
 
 @login_required
@@ -45,51 +133,6 @@ def create(request):
             instance.owner = request.user
             instance.save()
         return HttpResponseRedirect(reverse("index"))   
-
-
-def listing(request, id):
-    listing_1 = listing_2.objects.get(id=id)
-    commentList = comment.objects.filter(comment_listing = listing_1)
-    if request.method == "GET":
-        biddingForm = bidForm()
-        commentingForm = commentForm()
-        if listing_1 is not None:
-            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList})
-        else:
-            raise Http404('List does not exist')
-    else:
-        biddingForm = bidForm(request.POST)
-        commentingForm = commentForm(request.POST)
-        if biddingForm.is_valid():
-            instance = biddingForm.save(commit=False)
-            if request.user == listing_1.owner:
-                messages.error(request, 'You cant bid on your own auction')
-                return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList})
-            else:
-                if instance.bid_amount <= listing_1.starting_price:
-                    messages.error(request, 'please bid more than the price of the item')
-                    return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList})
-                else:
-                    instance.bidder = request.user
-                    instance.bid_listing = listing_1
-                    instance.save()
-                    listing_1.starting_price = instance.bid_amount
-                    listing_1.winner = request.user
-                    listing_1.save()
-                    messages.success(request, 'Bid succesfully add')
-                    return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList})
-        elif commentingForm.is_valid():
-            instance = commentingForm.save(commit=False)
-            instance.commenter = request.user
-            instance.comment_listing = listing_1
-            instance.save()
-            messages.success(request, 'comment added!')
-            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList})
-        
-        
-        else:
-            messages.error(request, 'something wrong')
-            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList})
 
 
 def login_view(request):

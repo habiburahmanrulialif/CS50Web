@@ -8,7 +8,7 @@ from uuid import uuid4
 
 
 class User(AbstractUser):
-    watchlist = models.ManyToManyField("listing")
+    wishlist = models.ManyToManyField("listing")
     pass
 
 
