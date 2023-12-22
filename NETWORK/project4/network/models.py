@@ -31,3 +31,11 @@ class Follow:
     follower = models.ManyToManyField("User", related_name="follower")
     follower_count = models.IntegerField()
     following = models.ManyToManyField("User", related_name="following")
+
+    def serialize(self):
+        return {
+            "account" : self.account,
+            "follower" : [user.username for user in self.follower],
+            "follower_count" : self.follower_count,
+            "following" : [user.username for user in self.following]
+        }
