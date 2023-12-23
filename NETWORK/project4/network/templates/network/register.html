@@ -1,8 +1,9 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
 
-    <h2>Register</h2>
+    <h2 class="text-center">Register</h2>
 
     {% if message %}
         <div>{{ message }}</div>
@@ -26,5 +27,4 @@
     </form>
 
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
-
 {% endblock %}

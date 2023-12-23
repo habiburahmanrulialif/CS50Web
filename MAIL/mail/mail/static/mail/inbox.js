@@ -162,9 +162,9 @@ function sending_email(event){
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
-        recipients: recipients,
-        subject: subject,
-        body: body
+        "recipients": recipients,
+        "subject": subject,
+        "body": body
     })
   })
   .then(response => response.json())

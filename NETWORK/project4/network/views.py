@@ -3,12 +3,21 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .models import User, Post, Follow
+from django.core.paginator import Paginator
 
-from .models import User
 
 
 def index(request):
-    return render(request, "network/index.html")
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj' : page_obj,
+    }
+    return render(request, "network/index.html", context)
 
 
 def login_view(request):
