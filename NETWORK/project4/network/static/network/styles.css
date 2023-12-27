@@ -54,8 +54,42 @@ body {
 
 #post {
     flex: 1;
+    
 }
 
 .pagination {
     justify-content: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#post > ul > li {
+    margin: -1px;
+    padding: 12px;
+    border-bottom: 1px solid grey;
+}
+
+#compose-form {
+    margin: -1px;
+    padding: 12px;
+    padding-top: 20px;
+    border-bottom: 1px solid grey;
+}
+
+#submit-button {
+    margin-top: 10px;
+    
+}
+
+.card{
+    color: white;
+    background-color: black;
+}
+
+.card-title > small {
+    font-size: 0.6em;
+    color: grey;
 }

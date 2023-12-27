@@ -11,7 +11,8 @@
     </head>
     <body>
         <div class="d-flex">
-            <div class="" id="left"><a class="navbar-brand" href="#">Network</a>
+            <div class="" id="left">
+                <a class="navbar-brand" href="#">Network</a>
                 <div>
                     <ul class="navbar-nav mr-auto">
                     {% if user.is_authenticated %}
@@ -23,9 +24,6 @@
                             <a class="nav-link" href="{% url 'index' %}">All Posts</a>
                         </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'index' %}">New Post</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'index' %}">Following</a>
                         </li>
@@ -42,7 +40,7 @@
                     {% endif %}
                     </ul>
                 </div></div>
-            <div class="p-3" id="mid">
+            <div class="" id="mid">
                 {% block body %}
                 {% endblock %}
             </div>

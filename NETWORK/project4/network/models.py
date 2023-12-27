@@ -23,7 +23,7 @@ def path_and_rename(instance, filename):
 
 class Post(models.Model):
     post_owner = models.ForeignKey("User", on_delete=models.CASCADE, related_name = "poster")
-    post_image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename, null=True, blank=True)
+    post_image = models.ImageField(upload_to=path_and_rename, null=True, blank=True)
     post_text = models.TextField()
     post_time = models.DateTimeField(auto_now_add=True)
     post_like = models.ManyToManyField("User", related_name="post_like", blank=True)

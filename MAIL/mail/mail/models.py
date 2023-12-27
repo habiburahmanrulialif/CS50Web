@@ -15,15 +15,3 @@ class Email(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "sender": self.sender.email,
-            "recipients": [user.email for user in self.recipients.all()],
-            "subject": self.subject,
-            "body": self.body,
-            "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
-            "read": self.read,
-            "archived": self.archived
-        }

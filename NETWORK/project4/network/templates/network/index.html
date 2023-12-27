@@ -3,12 +3,22 @@
 {% block body %}
     <div id="content">
         <div id="post">
+            <form id="compose-form">
+                <textarea class="form-control" id="compose-body" placeholder="New Post"></textarea>
+                <input id="submit-button" type="submit" class="btn btn-primary"/>
+            </form> 
             <ul>
                 {% for post in page_obj %}
                 <li>
-                    {{ post.post_owner }}
-                    {{ post.post_text }}
-                    {{ post.post_time }}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">@{{ post.post_owner }}  <small>{{ post.post_time }}</small></h4>
+                            <p class="card-text">{{ post.post_text}}</p>
+                        </div>
+                        {% if post.post_image %}
+                            <img src="{{ post.post_image.url }}" alt="" class="img-fluid rounded">
+                        {% endif %}
+                    </div>
                 </li>
                 {% endfor %}
             </ul>

@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 
 
 def index(request):
-    post_list = Post.objects.all()
+    post_list = Post.objects.all().order_by("-id")
     paginator = Paginator(post_list, 10)
 
     page_number = request.GET.get('page')
