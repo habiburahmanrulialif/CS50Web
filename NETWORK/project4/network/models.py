@@ -31,18 +31,6 @@ class Post(models.Model):
     def like_count(self):
         return self.post_like.all().count()
 
-    
-    def serialize(self):
-        return {
-            "post_id": self.id,
-            "post_owner": self.post_owner.username,
-            "post_image": self.post_image,
-            "post_text" : self.post_text,
-            "post_time" : self.post_time.strftime("%b %d %Y, %I:%M %p"),
-            "post_like" : [user.username for user in self.post_like.all()],
-            "post_like_count" : self.like_count()
-        }
-    
     def __str__(self):
         return f'{self.post_owner} - {self.id}'
     
@@ -55,10 +43,3 @@ class Follow(models.Model):
 
     def follower_count(self):
         return self.follower.all().count()
-
-    def serialize(self):
-        return {
-            "account" : self.account,
-            "follower" : [user.username for user in self.follower.all()],
-            "following" : [user.username for user in self.following.all()]
-        }

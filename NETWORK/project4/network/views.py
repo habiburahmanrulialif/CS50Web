@@ -1,10 +1,15 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User, Post, Follow
 from django.core.paginator import Paginator
+from .serializers import PostSerializer, FollowSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .forms
 
 
 
@@ -14,6 +19,8 @@ def index(request):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    form = 
     context = {
         'page_obj' : page_obj,
     }
@@ -70,3 +77,17 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+@api_view(['GET', 'POST'])
+def PostApi(request) :
+    if request.method == 'GET':
+        #Get all post
+        Posts = Post.objects.all()
+        #serialize post
+        serializer = PostSerializer(Posts, many=True )
+        #return JSON
+        return Response({'post':serializer.data})
+    
+    if request.method == 'POST':
+        pass
