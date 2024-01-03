@@ -165,7 +165,7 @@ function sending_email(event){
         "recipients": recipients,
         "subject": subject,
         "body": body
-    })
+    }),
   })
   .then(response => response.json())
   .then(result => {

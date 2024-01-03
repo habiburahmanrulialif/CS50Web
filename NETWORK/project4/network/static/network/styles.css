@@ -72,6 +72,10 @@ ul {
     border-bottom: 1px solid grey;
 }
 
+#post > #form {
+    margin-top: 20px;
+}
+
 #compose-form {
     margin: -1px;
     padding: 12px;

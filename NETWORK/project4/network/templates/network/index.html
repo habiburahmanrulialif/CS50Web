@@ -1,54 +1,11 @@
-{% extends "network/layout.html" %}
+{% extends "network/layout.html" %}\
+{% load static %}
 
 {% block body %}
-    <div id="content">
-        <div id="post">
-            <form action="{% url "create" %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% with WIDGET_ERROR_CLASS='my_error' WIDGET_REQUIRED_CLASS='my_required' %}
-                    <div>
-                        {% render_field form.post_text class+="form-control m-2" placeholder="Please input title" %}
-                    </div>
-                    <div>
-                        {% render_field form.post_image class+="form-control m-2" placeholder="Please input item description" %}
-                    </div>
-                {% endwith %}
-                <button type="submit" class="m-2">submit</button>
-            </form>
-            <ul>
-                {% for post in page_obj %}
-                <li>
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">@{{ post.post_owner }}  <small>{{ post.post_time }}</small></h4>
-                            <p class="card-text">{{ post.post_text}}</p>
-                        </div>
-                        {% if post.post_image %}
-                            <img src="{{ post.post_image.url }}" alt="" class="img-fluid rounded">
-                        {% endif %}
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div id="page">
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
-            
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-            
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
-        </div>
-    </div>
+    <form id="uploadForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" id="textInput" name="textData" placeholder="Enter text">
+        <input type="file" id="imageInput" name="image">
+        <button type="submit">Upload</button>
+    </form>
 {% endblock %}

@@ -43,3 +43,6 @@ class Follow(models.Model):
 
     def follower_count(self):
         return self.follower.all().count()
+    
+    def following_count(self):
+        return self.following.all().count()

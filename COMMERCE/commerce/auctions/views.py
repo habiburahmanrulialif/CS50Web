@@ -127,7 +127,7 @@ def create(request):
         form = listingForm()
         return render(request, "auctions/create.html", {'form': form})
     else:
-        form = listingForm(request.POST, request.FILES)
+        form = listingForm( )
         if form.is_valid():
             instance = form.save(commit=False)
             instance.owner = request.user

@@ -4,27 +4,16 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User, Post, Follow
-from django.core.paginator import Paginator
 from .serializers import PostSerializer, FollowSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .forms
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    post_list = Post.objects.all().order_by("-id")
-    paginator = Paginator(post_list, 10)
-
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    form = 
-    context = {
-        'page_obj' : page_obj,
-    }
-    return render(request, "network/index.html", context)
+    return render(request, "network/index.html")
 
 
 def login_view(request):
@@ -79,15 +68,77 @@ def register(request):
         return render(request, "network/register.html")
 
 
-@api_view(['GET', 'POST'])
-def PostApi(request) :
+@api_view(["GET"])
+def PostApi(request):
     if request.method == 'GET':
-        #Get all post
-        Posts = Post.objects.all()
-        #serialize post
-        serializer = PostSerializer(Posts, many=True )
-        #return JSON
-        return Response({'post':serializer.data})
-    
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@login_required
+def posting(request):
     if request.method == 'POST':
-        pass
+        text_data = request.POST.get('textData')
+        if 'image' in request.FILES:
+            uploaded_image = request.FILES['image']
+        else:
+            uploaded_image = ''
+        temp = Post(post_image=uploaded_image, post_text=text_data, post_owner=User.objects.get(id=1))
+        temp.save()
+        serializer = PostSerializer(temp, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(["GET", "PUT", "DELETE"])
+@login_required
+def PostDetailAPI(request, postId):
+    post = get_object_or_404(Post, id=postId)
+    if request.method == "GET":
+        serializer = PostSerializer(post, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    if request.method == "PUT":
+        if request.user in post.post_like.all():
+            post.post_like.remove(request.user)
+            post.save()
+            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+        else:
+            post.post_like.add(request.user)
+            post.save
+            serializer = PostSerializer(post)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+    if request.method == "DELETE":
+        post.delete()
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+@api_view(["GET", "PUT"])
+@login_required
+def FollowApi(request, id):
+    user = Follow.objects.get(account=User.objects.get(request.user))
+    target_account = User.objects.get(id=id)
+    account= Follow.objects.get(account=target_account)
+    account_follower = account.follower.all()
+
+    if request.method == "GET":
+        serializer = FollowSerializer(account, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    if request.method == "PUT":
+        if request.user in account_follower:
+            account_follower.remove(request.user)
+            account.save()
+            user.following.remove(target_account)
+            user.save()
+            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+        else:
+            account_follower.add(request.user)
+            account.save()
+            user.following.add(target_account)
+            user.save()
+            serializer = FollowSerializer(account, many=True)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
