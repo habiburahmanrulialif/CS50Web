@@ -72,8 +72,16 @@ ul {
     border-bottom: 1px solid grey;
 }
 
-#post > #form {
-    margin-top: 20px;
+#items{
+    margin: -1px;
+    padding: 12px;
+    border-bottom: 1px solid grey;
+}
+
+#post > form {
+    margin-top: 2%;
+    padding: 1%;
+    border-bottom: 1px solid grey;
 }
 
 #compose-form {
@@ -96,4 +104,8 @@ ul {
 .card-title > small {
     font-size: 0.6em;
     color: grey;
+}
+
+#textInput{
+    width: 100%;
 }

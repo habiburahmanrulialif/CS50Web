@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from rest_framework.pagination import PageNumberPagination
 
 
 def index(request):
@@ -71,9 +72,20 @@ def register(request):
 @api_view(["GET"])
 def PostApi(request):
     if request.method == 'GET':
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        paging_post = paginator.paginate_queryset(posts, request)
+        serializer = PostSerializer(paging_post, many=True)
+        data = {
+        'results': serializer.data,
+        'count': paginator.page.paginator.count,
+        'next': paginator.get_next_link(),
+        'previous': paginator.get_previous_link()
+        }
+        return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
@@ -113,7 +125,6 @@ def PostDetailAPI(request, postId):
     if request.method == "DELETE":
         post.delete()
         return Response(status=status.HTTP_404_NOT_FOUND)
-
 
 
 @api_view(["GET", "PUT"])

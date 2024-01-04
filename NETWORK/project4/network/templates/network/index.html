@@ -2,10 +2,26 @@
 {% load static %}
 
 {% block body %}
-    <form id="uploadForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="text" id="textInput" name="textData" placeholder="Enter text">
-        <input type="file" id="imageInput" name="image">
-        <button type="submit">Upload</button>
-    </form>
+    <div id="post">
+        <form id="uploadForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div><textarea type="text" id="textInput" class="" name="textData" placeholder="Enter text" rows="3"></textarea></div>
+            <div>
+                <input type="file" id="imageInput" name="image">
+            </div>
+            <div><button type="submit" id="submitButton">Upload</button></div>
+        </form>
+
+        <div id="results"></div>
+        <div id="pagination" class="text-center">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/pagination.js' %}"></script>
+    <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}
