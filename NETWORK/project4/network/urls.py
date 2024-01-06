@@ -12,4 +12,5 @@ urlpatterns = [
     path("posting/", views.posting, name="posting"),
     path("post/<int:postId>", views.PostDetailAPI, name="post_detail"),
     path("account/<>int:id", views.FollowApi, name="account_detail"),
+    path('check_like_status/<int:post_id>/', views.check_like_status, name='check_like_status'),
 ]

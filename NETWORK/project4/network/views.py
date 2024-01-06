@@ -75,7 +75,7 @@ def PostApi(request):
         paginator = PageNumberPagination()
         paginator.page_size = 10
 
-        posts = Post.objects.all()
+        posts = Post.objects.order_by('-id')
 
         paging_post = paginator.paginate_queryset(posts, request)
         serializer = PostSerializer(paging_post, many=True)
@@ -92,15 +92,17 @@ def PostApi(request):
 @login_required
 def posting(request):
     if request.method == 'POST':
-        text_data = request.POST.get('textData')
-        if 'image' in request.FILES:
-            uploaded_image = request.FILES['image']
+        if request.POST.get('textData') or 'image' in request.FILES:
+            text_data = request.POST.get('textData')
+            if 'image' in request.FILES:
+                uploaded_image = request.FILES['image']
+            else:
+                uploaded_image = ''
+            temp = Post(post_image=uploaded_image, post_text=text_data, post_owner=User.objects.get(id=1))
+            temp.save()
+            return Response(status=status.HTTP_201_CREATED)
         else:
-            uploaded_image = ''
-        temp = Post(post_image=uploaded_image, post_text=text_data, post_owner=User.objects.get(id=1))
-        temp.save()
-        serializer = PostSerializer(temp, many=True)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET", "PUT", "DELETE"])
@@ -153,3 +155,18 @@ def FollowApi(request, id):
             user.save()
             serializer = FollowSerializer(account, many=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+
+@api_view(['GET'])
+@login_required
+def check_like_status(request, post_id):
+    user = request.user  # Get the current user
+
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return Response({"message": "Post not found"}, status=404)
+
+    liked = post.like_by_user(user)
+    
+    return Response({"liked": liked})

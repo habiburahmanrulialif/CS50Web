@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django_resized import ResizedImageField
 import os
 from uuid import uuid4
 
@@ -25,15 +24,25 @@ class Post(models.Model):
     post_owner = models.ForeignKey("User", on_delete=models.CASCADE, related_name = "poster")
     post_image = models.ImageField(upload_to=path_and_rename, null=True, blank=True)
     post_text = models.TextField()
-    post_time = models.DateTimeField(auto_now_add=True)
+    post_date = models.DateField(auto_now_add=True)
+    post_time = models.TimeField(auto_now_add=True)
     post_like = models.ManyToManyField("User", related_name="post_like", blank=True)
+
+    def clean_post_time(self):
+        # Remove milliseconds by setting microseconds to zero
+        if self.post_time:
+            clean = self.post_time.strftime('%H:%M:%S')
+            return clean
+        return None
+
+    def like_by_user(self, user):
+        return self.post_like.filter(pk=user.pk).exists()
 
     def like_count(self):
         return self.post_like.all().count()
 
     def __str__(self):
         return f'{self.post_owner} - {self.id}'
-    
 
 
 class Follow(models.Model):
