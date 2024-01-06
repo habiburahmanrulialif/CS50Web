@@ -98,11 +98,28 @@ def posting(request):
                 uploaded_image = request.FILES['image']
             else:
                 uploaded_image = ''
-            temp = Post(post_image=uploaded_image, post_text=text_data, post_owner=User.objects.get(id=1))
+            temp = Post(post_image=uploaded_image, post_text=text_data, post_owner=request.user)
             temp.save()
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def editPost(request, id):
+    post = get_object_or_404(Post, id=id)
+    text = request.POST.get('textData', '')
+    image = request.FILES.get('image', None)
+
+    print(text)
+    if text or image:
+        if image:
+            post.post_image = image
+        if text:
+            post.post_text = text
+        post.save()
+        return Response(status=status.HTTP_201_CREATED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET", "PUT", "DELETE"])
@@ -110,7 +127,7 @@ def posting(request):
 def PostDetailAPI(request, postId):
     post = get_object_or_404(Post, id=postId)
     if request.method == "GET":
-        serializer = PostSerializer(post, many=True)
+        serializer = PostSerializer(post, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     if request.method == "PUT":
@@ -158,7 +175,6 @@ def FollowApi(request, id):
         
 
 @api_view(['GET'])
-@login_required
 def check_like_status(request, post_id):
     user = request.user  # Get the current user
 
@@ -170,3 +186,40 @@ def check_like_status(request, post_id):
     liked = post.like_by_user(user)
     
     return Response({"liked": liked})
+
+
+def profiles(request, id):
+    return render(request, "network/profile.html", {'profile_id' : id})
+
+
+@api_view(['GET'])
+def profile(request, id):
+    user = User.objects.get(id=id)
+    post = Post.objects.filter(post_owner=user).order_by('-id')
+    follow = Follow.objects.get(account=user)
+    followSerialize = FollowSerializer(follow, many=False)
+    if post:
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        paging_post = paginator.paginate_queryset(post, request)
+
+        serializer = PostSerializer(paging_post, many=True)
+        data = {
+        'results': serializer.data,
+        'follow': followSerialize.data,
+        'count': paginator.page.paginator.count,
+        'next': paginator.get_next_link(),
+        'previous': paginator.get_previous_link()
+        }
+        return Response(data, status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+def postUser(request, id):
+    pass
+
+
+def postFollowing(request,id):
+    pass

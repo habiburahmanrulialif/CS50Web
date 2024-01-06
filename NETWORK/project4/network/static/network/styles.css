@@ -84,6 +84,12 @@ ul {
     border-bottom: 1px solid grey;
 }
 
+#post > #editPost > form{
+    margin-top: 2%;
+    padding: 1%;
+    border-bottom: 1px solid grey;
+}
+
 #compose-form {
     margin: -1px;
     padding: 12px;
@@ -108,4 +114,8 @@ ul {
 
 #textInput{
     width: 100%;
+}
+
+#editTextInput {
+    width: 100%
 }

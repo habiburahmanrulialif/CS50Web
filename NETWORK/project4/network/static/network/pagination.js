@@ -1,5 +1,5 @@
 var currentPage = 1;
-
+document.querySelector('#editPost').style.display = 'none';
 function fetchData(page) {
     fetch(`post/?page=${page}`)
         .then(response => {
@@ -33,8 +33,16 @@ function displayData(data) {
                 const isOwner = item.username === currentUser; 
                 let editButton = '';
                 if (isOwner) {
-                    editButton = `<button class="likeButton" onclick="like(${item.id})">Edit Post</button>`; // Custom message or action for the owner
+                    editButton = `<button class="likeButton" onclick="edit(${item.id})">Edit Post</button>`; // Custom message or action for the owner
                 } 
+                let checkUser = '';
+                
+                if (currentUser){
+                    checkUser = `<button class="likeButton" onclick="like(${item.id})">${likeData.liked ? 'unlike' : 'like'}</button>`
+                }
+                else{
+                    checkUser = `<a href="/login" class="loginButton"><button>like</button></a>`
+                }
                 resultsDiv.innerHTML += `
                     <div id="items">
                         <div class="card text-start">
@@ -44,7 +52,7 @@ function displayData(data) {
                                 <p class="card-text">${item.post_text}</p>
                                 <p class="card-text">${item.clean_post_time}</p>
                                 <p class="card-text">Like : ${item.like_count}</p>
-                                <button class="likeButton" onclick="like(${item.id})">${likeData.liked ? 'unlike' : 'like'}</button>
+                                ${checkUser}
                                 ${editButton}
                             </div>
                         </div>
@@ -90,4 +98,33 @@ function like(id){
         console.log(response);
         fetchData(currentPage);
     })
+}
+
+function edit(id){
+    document.querySelector('#editPost').style.display = 'block';
+
+    fetch(`post/${id}`, {
+        method: 'GET'
+        })
+    .then(response =>  {
+        // Handle response from the server
+        console.log(response);
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        var editTextInput = document.querySelector('#editTextInput');
+
+        if (data && data.post_text !== undefined) {
+            editTextInput.value = data.post_text;
+        } else {
+            console.error('Invalid data or missing post_text property.');
+        }
+        editTextInput.focus();
+        var hiddenValue = document.querySelector('#postID');
+        hiddenValue.value = data.id;
+    })
+    .catch(error => {
+        console.error('Error fetching or setting data:', error);
+        });
 }

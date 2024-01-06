@@ -11,5 +11,5 @@ class PostSerializer(serializers.ModelSerializer):
 
 class FollowSerializer(serializers.ModelSerializer):
     class Meta:
-        model : Follow
-        fields : ["id", "account", "follower", "following", "follower_count", "following_count"]
+        model = Follow
+        fields = ["id", "account", "follower", "following", "follower_count", "following_count"]
