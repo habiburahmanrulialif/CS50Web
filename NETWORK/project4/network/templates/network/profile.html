@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-    <div id="results" >{{ profile_id}}</div>
+    <div id="results" ></div>
     <div id="pagination" class="text-center mt-2">
         <button id="prevBtn">Previous</button>
         <button id="nextBtn">Next</button>
@@ -10,5 +10,7 @@
 {% endblock %}
 
 {% block script %}
-    <script>var profile_id = {{profile_id}}</script>
+    <script>var profile_id = {{profile_id}};</script>
+    <script>var currentUser = "{{ request.user.username }}";</script>
+    <script src="{% static 'network/profile_post.js' %}"></script>
 {% endblock %}

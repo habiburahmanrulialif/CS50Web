@@ -194,8 +194,10 @@ def profiles(request, id):
 
 @api_view(['GET'])
 def profile(request, id):
-    user = User.objects.get(id=id)
+    user = get_object_or_404(User, id=id)
     post = Post.objects.filter(post_owner=user).order_by('-id')
+    if not post.exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
     follow = Follow.objects.get(account=user)
     followSerialize = FollowSerializer(follow, many=False)
     if post:
