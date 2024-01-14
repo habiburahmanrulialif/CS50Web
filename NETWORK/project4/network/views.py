@@ -134,10 +134,11 @@ def PostDetailAPI(request, postId):
         if request.user in post.post_like.all():
             post.post_like.remove(request.user)
             post.save()
-            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+            serializer = PostSerializer(post)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             post.post_like.add(request.user)
-            post.save
+            post.save()
             serializer = PostSerializer(post)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
@@ -146,33 +147,12 @@ def PostDetailAPI(request, postId):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(["GET", "PUT"])
-@login_required
+@api_view(["GET"])
 def FollowApi(request, id):
-    user = Follow.objects.get(account=User.objects.get(request.user))
     target_account = User.objects.get(id=id)
     account= Follow.objects.get(account=target_account)
-    account_follower = account.follower.all()
-
-    if request.method == "GET":
-        serializer = FollowSerializer(account, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    if request.method == "PUT":
-        if request.user in account_follower:
-            account_follower.remove(request.user)
-            account.save()
-            user.following.remove(target_account)
-            user.save()
-            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
-        else:
-            account_follower.add(request.user)
-            account.save()
-            user.following.add(target_account)
-            user.save()
-            serializer = FollowSerializer(account, many=True)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+    serializer = FollowSerializer(account, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def check_like_status(request, post_id):
@@ -218,10 +198,28 @@ def profile(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-
 def postUser(request, id):
     pass
 
 
 def postFollowing(request,id):
+    user = Follow.objects.get(account=request.user)
+    target_account = User.objects.get(id=id)
+    account= Follow.objects.get(account=target_account)
+    account_follower = account.follower.all()
+    if request.method == "PUT":
+        if request.user in account_follower:
+            account_follower.remove(request.user)
+            account.save()
+            user.following.remove(target_account)
+            user.save()
+            serializer = FollowSerializer(account, many=False)
+            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+        else:
+            account_follower.add(request.user)
+            account.save()
+            user.following.add(target_account)
+            user.save()
+            serializer = FollowSerializer(account, many=False)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
     pass

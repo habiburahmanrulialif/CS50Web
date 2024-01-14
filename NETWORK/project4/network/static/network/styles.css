@@ -66,6 +66,7 @@ ul {
     margin: 0;
     padding: 0;
 }
+
 #post > ul > li {
     margin: -1px;
     padding: 12px;
@@ -123,4 +124,10 @@ ul {
 a {
     color: inherit;
     text-decoration: inherit;
+}
+
+#profile {
+    margin-top: 2%;
+    padding: 1%;
+    border-bottom: 1px solid grey;
 }

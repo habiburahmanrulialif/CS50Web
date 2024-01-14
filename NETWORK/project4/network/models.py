@@ -2,8 +2,14 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 import os
 from uuid import uuid4
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 class User(AbstractUser):
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Create Follow instance for the new user
+        Follow.objects.get_or_create(account=self)
     pass
 
 
@@ -55,3 +61,13 @@ class Follow(models.Model):
     
     def following_count(self):
         return self.following.all().count()
+    
+    @classmethod
+    def create_follow_for_user(cls, user):
+        follow, created = cls.objects.get_or_create(account=user)
+        return follow
+
+@receiver(post_save, sender=User)
+def create_follow_for_new_user(sender, instance, created, **kwargs):
+    if created:
+        Follow.objects.get_or_create(account=instance)

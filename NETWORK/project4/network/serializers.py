@@ -10,6 +10,8 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
+    account = serializers.PrimaryKeyRelatedField(read_only=True)
+    account_name = serializers.CharField(source='account.username', read_only=True)
     class Meta:
         model = Follow
-        fields = ["id", "account", "follower", "following", "follower_count", "following_count"]
+        fields = ["id", "account", "follower", "following", "follower_count", "following_count", "account_name"]

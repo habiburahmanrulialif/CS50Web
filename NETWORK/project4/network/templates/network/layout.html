@@ -47,7 +47,8 @@
             </div>
             <div class="" id="right">
                 {% if user.is_authenticated %}
-                    right
+                    {% block right_side %}
+                    {% endblock%}
                 {% endif %}
             </div>
         </div>

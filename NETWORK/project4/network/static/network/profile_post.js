@@ -1,3 +1,9 @@
+function getCSRFToken() {
+    const selectElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    return selectElement.value;
+}
+
+
 var currentPage = 1;
 const baseUrl = window.location.protocol + '//' + window.location.host;
 const userID = 1;
@@ -87,3 +93,18 @@ document.getElementById('nextBtn').addEventListener('click', function() {
 // Initial fetch when the page loads
 fetchData(currentPage);
 
+
+function like(id){
+    const csrfToken = getCSRFToken();
+    fetch(`${baseUrl}/post/${id}`, {
+        method: 'PUT',
+        headers:{
+            'X-CSRFToken': csrfToken
+        }
+        })
+    .then(response =>  {
+        // Handle response from the server
+        console.log(response);
+        fetchData(currentPage);
+    })
+}

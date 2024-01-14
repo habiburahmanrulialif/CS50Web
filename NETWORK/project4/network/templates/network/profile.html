@@ -2,7 +2,24 @@
 {% load static %}
 
 {% block body %}
-    <div id="results" ></div>
+    <div id="profile">
+        {% csrf_token %}
+        <h2 class="text-center" id="account_name">asdasd</h2>
+        <div
+            class="row justify-content-center align-items-center g-2 text-center mt-2"
+        >
+            <div class="col" id="Follower">1</div>
+            <div class="col" id="Following">2</div>
+        </div>
+        <div
+            class="row justify-content-center align-items-center g-2 text-center"
+        >
+            <div class="col">Follower</div>
+            <div class="col">Following</div>
+        </div>
+        <div class="mt-5 text-center mb-2" id="follow_button">follow</div>
+    </div>
+    <div id="results"></div>
     <div id="pagination" class="text-center mt-2">
         <button id="prevBtn">Previous</button>
         <button id="nextBtn">Next</button>
@@ -13,4 +30,5 @@
     <script>var profile_id = {{profile_id}};</script>
     <script>var currentUser = "{{ request.user.username }}";</script>
     <script src="{% static 'network/profile_post.js' %}"></script>
+    <script src="{% static 'network/profile.js' %}"></script>
 {% endblock %}
