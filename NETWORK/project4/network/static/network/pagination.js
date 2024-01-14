@@ -52,7 +52,7 @@ function displayData(data) {
                             <div class="card-body">
                                 ${account}    
                                 <p class="card-text">${item.post_text}</p>
-                                <p class="card-text">${item.clean_post_time}</p>
+                                <p class="card-text">Posted at : ${item.clean_post_time}</p>
                                 <p class="card-text">Like : ${item.like_count}</p>
                                 ${checkUser}
                                 ${editButton}

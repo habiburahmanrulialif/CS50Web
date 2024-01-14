@@ -1,0 +1,38 @@
+{% extends "network/layout.html" %}\
+{% load static %}
+
+{% block body %}
+    <div id="post">
+        <form id="uploadForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div><textarea type="text" id="textInput" class="" name="textData" placeholder="Enter text" rows="3"></textarea></div>
+            <div>
+                <input type="file" id="imageInput" name="image">
+            </div>
+            <div><button type="submit" id="submitButton">Upload</button></div>
+        </form>
+        <div id="editPost" autofocus>
+            <form id="uploadFormEdit" method="PUT" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div><textarea type="text" id="editTextInput" class="" name="textData"  rows="3"></textarea></div>
+                <div>
+                    <input type="file" id="editimageInput" name="image">
+                </div>
+                <input type="hidden" id="postID">
+                <div><button type="submit" id="submitButtonEdit">Upload</button></div>
+            </form>
+        </div>
+        <div id="results" ></div>
+        <div id="pagination" class="text-center mt-2">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>const currentUser = "{{ request.user.username }}";</script> 
+    <script src="{% static 'network/following.js' %}"></script>
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}

@@ -104,6 +104,7 @@ def posting(request):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 def editPost(request, id):
     post = get_object_or_404(Post, id=id)
@@ -152,7 +153,21 @@ def FollowApi(request, id):
     target_account = User.objects.get(id=id)
     account= Follow.objects.get(account=target_account)
     serializer = FollowSerializer(account, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.user:
+        account_follower = account.follower.all()
+        if request.user in account_follower:
+            check = True
+        else:
+            check = False
+        
+        data = {
+            'result' : serializer.data,
+            'check' : check
+        }
+        return Response(data, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def check_like_status(request, post_id):
@@ -198,28 +213,53 @@ def profile(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-def postUser(request, id):
-    pass
-
-
-def postFollowing(request,id):
+@api_view(["PUT"])
+@login_required
+def Following(request, id):
     user = Follow.objects.get(account=request.user)
     target_account = User.objects.get(id=id)
     account= Follow.objects.get(account=target_account)
     account_follower = account.follower.all()
     if request.method == "PUT":
         if request.user in account_follower:
-            account_follower.remove(request.user)
+            account.follower.remove(request.user)
             account.save()
             user.following.remove(target_account)
             user.save()
             serializer = FollowSerializer(account, many=False)
-            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            account_follower.add(request.user)
+            account.follower.add(request.user)
             account.save()
             user.following.add(target_account)
             user.save()
             serializer = FollowSerializer(account, many=False)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-    pass
+
+
+@api_view(["GET"])
+@login_required
+def FollowingPost(request):
+    if request.method == 'GET':
+        user = Follow.objects.get(account=request.user)
+        followed = user.following.all()
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        posts = Post.objects.filter(post_owner__in=followed).order_by('-id')
+
+        paging_post = paginator.paginate_queryset(posts, request)
+        serializer = PostSerializer(paging_post, many=True)
+        data = {
+        'results': serializer.data,
+        'count': paginator.page.paginator.count,
+        'next': paginator.get_next_link(),
+        'previous': paginator.get_previous_link()
+        }
+        return Response(data, status=status.HTTP_200_OK)
+
+
+@login_required
+def FollowingPostFront(request):
+    return render(request, "network/following.html")
