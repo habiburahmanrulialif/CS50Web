@@ -7,36 +7,40 @@
     </head>
     <body>
         <header>
-            <div class="container">
-                <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Google Search</a></li>
-                    <li class="nav-item"><a href="image-search.html" class="nav-link">Image search</a></li>
-                </ul>
+            <div class="d-flex bd-highlight mb-3">
+                <div class="me-auto p-2 bd-highlight"><a href="index.html" class="nav-link"><img alt="Google" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" style="height: 40px;"></a></div>
+                <div class="p-2 bd-highlight"><a href="index.html" class="nav-link">Google Search</a></div>
+                <div class="p-2 bd-highlight"><a href="image-search.html" class="nav-link">Image search</a></div>
             </div>
         </header>
         <main>
             <div class="container">
                 <div class="row">
-                    <div class="col" style="margin-top: 10vh;">
-                        <img alt="Google" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="img-fluid">
-                    </div>
-                    <div >
-                        <form action="https://google.com/search">
-                            <input class="margin" value autofocus="autofocus" id="xX4UFf" name="as_q" type="text">
-                            <label for="xX4UFf" class="float">all these words:</label>
-                            <br>
-                            <input class="margin" value autofocus="autofocus" id="CwYCWc" name="as_epq" type="text">
-                            <label for="CwYCWc" class="float">this exact word or phrase:</label>
-                            <br>
-                            <input class="margin" value autofocus="autofocus" id="mSoczb" name="as_oq" type="text">
-                            <label for="mSoczb" class=float>any of these words:</label>
-                            <br>
-                            <input class="margin" value autofocus="autofocus" id="t2dX1c" name="as_eq" type="text">
-                            <label for="t2dX1c" class="float">none of these words:</label>
-                            <br>
-                            <input type="submit" id="button">
-                        </form>
-                    </div>
+                    <form action="https://google.com/search">
+                        <table>
+                            <tr><td><h4>Find pages with...</h4></td></tr>
+                            <tr>
+                                <td>all these words:</td>
+                                <td><input class="margin" value autofocus="autofocus" id="input_advance" name="as_q" type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>this exact word or phrase:</td>
+                                <td><input class="margin" value autofocus="autofocus" id="input_advance" name="as_epq" type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>any of these words:</td>
+                                <td><input class="margin" value autofocus="autofocus" id="input_advance" name="as_oq" type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>none of these words:</td>
+                                <td><input class="margin" value autofocus="autofocus" id="input_advance" name="as_eq" type="text"></td>
+                            </tr>
+                            <tr >
+                                <td></td>
+                                <td class="text-end"><button type="submit" id="advance_button" class="me-2">advance search</button></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
             </div>
         </main>

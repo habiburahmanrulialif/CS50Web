@@ -50,8 +50,10 @@ def edit_page(request, title):
         title = request.POST.get('title')
         content = request.POST.get('content')
         util.save_entry(title, content)
-        return render(request, "encyclopedia/index.html", {
-            "entries": util.list_entries()
+        text = markdown2.Markdown()
+        return render(request, "encyclopedia/entry-page.html", {
+            "title": title,
+            "content": text.convert(util.get_entry(title))
         })
     content = util.get_entry(title)
     return render(request, "encyclopedia/edit-page.html",{

@@ -86,3 +86,17 @@ html, body {
     margin-right: 10px;
     margin-bottom: 10px;
 }   
+
+#advance_button{
+    background-color: blue;
+    color: white;
+    text-align: right;
+}
+
+#advance_button:hover{
+    opacity: 90%;
+}
+
+#input_advance{
+    width: 50vw;
+}

@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Please input new page that you want</h1>
+    <h1>{{ title }}</h1>
 
-    <form action="{% url 'new_page' %}" method="POST">
+    <form action="{% url 'edit_page' title=title %}" method="POST">
         {% csrf_token %}
         <div>
             <input type="hidden" placeholder="Page Title" name="title" value="{{ title }}">
