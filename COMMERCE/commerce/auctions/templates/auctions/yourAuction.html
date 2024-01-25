@@ -6,7 +6,7 @@
         <div class="card border-primary mx-auto m-3" style="width: 90%">
             <div class="row g-0">
                 <div class="col-md-3 p-2 center border align-item-center">
-                    <img src="{{list.image.url}}" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
+                    <img src="{% if list.image %}{{list.image.url}}{% elif list.image_url %}{{ list.image_url }}{% else %}https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg{% endif %}" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
                 </div>
                 <div class="col-md-9">
                     <div class="card-body">

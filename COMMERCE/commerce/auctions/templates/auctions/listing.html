@@ -4,7 +4,7 @@
     <div class="card mb-3 mx-auto border-0" style="width: 80%;">
         <div class="row g-0">
             <div class="col-md-4 my-auto mx-auto">
-                <img src="{{listing.image.url}}" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
+                <img src="{% if listing.image %}{{listing.image.url}}{% elif listing.image_url %}{{ listing.image_url }}{% else %}https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg{% endif %}" class="img-fluid list-sizing rounded-top mx-auto my-auto" alt="...">
             </div>
             <div class="col-md-8">
                 <div class="card-body border">
@@ -36,7 +36,13 @@
                                     class="btn btn-primary"
                                     href="{% url "wish" id=listing.id%}"
                                     role="button"
-                                    >Watchlist</a
+                                    >
+                                    {% if wish %}
+                                    Watchlisted
+                                    {% else %}
+                                    Watchlist
+                                    {% endif %}
+                                    </a
                                 >
                             {% endif %}
                         </div>

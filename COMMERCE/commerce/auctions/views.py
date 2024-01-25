@@ -32,7 +32,6 @@ def listing(request, id):
         owner = True
     else:
         owner = False
-    
     if request.user == listing_1.winner:
         winning = True
     else:
@@ -41,7 +40,16 @@ def listing(request, id):
         biddingForm = bidForm()
         commentingForm = commentForm()
         if listing_1 is not None:
-            return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
+            if request.user:
+                user_instance = User.objects.get(username=request.user)
+                wishCheck = user_instance.wishlist.all()
+                if listing_1 in wishCheck:
+                    wishCheck_1 = True
+                else:
+                    wishCheck_1 = False
+                return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning, 'wish' : wishCheck_1})
+            else:
+                return render(request, "auctions/listing.html", {'listing': listing_1, 'bidForm' : biddingForm, 'commentForm' : commentingForm, 'comments' : commentList, 'owner' : owner, 'winning':winning})
         else:
             raise Http404('List does not exist')
     else:
@@ -96,14 +104,14 @@ def wish(request, id):
     if wish_1 in wish_2:
         request.user.wishlist.remove(wish_1)
         request.user.save()
-        messages.success(request, 'Item succesfully added to watchlist!')
+        messages.success(request, 'Item succesfully remove to watchlist!')
         return HttpResponseRedirect(reverse('listing',kwargs={
                 'id': id
             }))
     else:
         request.user.wishlist.add(wish_1)
         request.user.save()
-        messages.success(request, 'Item succesfully remove from watchlist!')
+        messages.success(request, 'Item succesfully added from watchlist!')
         return HttpResponseRedirect(reverse('listing',kwargs={
                 'id': id
             }))
@@ -127,12 +135,16 @@ def create(request):
         form = listingForm()
         return render(request, "auctions/create.html", {'form': form})
     else:
-        form = listingForm( )
+        form = listingForm(request.POST, request.FILES)
+        print("Form data:", request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.owner = request.user
             instance.save()
-        return HttpResponseRedirect(reverse("index"))   
+            return HttpResponseRedirect(reverse("index"))   
+        else:
+            print(form.errors)
+            return render(request, "auctions/create.html", {'form': form, 'errors': form.errors})
 
 
 def login_view(request):

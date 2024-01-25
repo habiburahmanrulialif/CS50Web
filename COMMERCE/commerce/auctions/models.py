@@ -45,7 +45,8 @@ class bid(models.Model):
 class listing(models.Model):
     name = models.CharField(max_length=64)
     desc = models.TextField(blank=True, null=True)
-    image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename)
+    image = ResizedImageField(size=[1920, 1080], upload_to=path_and_rename, null=True, blank=True)
+    image_url = models.CharField(max_length=512, blank=True, null=True, default='')
     # Booleanfield default = true, which mean listing still open. And False when listing closed
     status = models.BooleanField(default=True)
     owner = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True, related_name='owner')
