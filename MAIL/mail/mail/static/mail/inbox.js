@@ -87,13 +87,16 @@ function open_email(id){
       else{
         archive_status = "Unarchive";
       }
+      // Check if the sender the same as current user
+      const currentUser = email.user;
+      const archiveButton = currentUser === email.sender ? '' : `<button id="archive">${archive_status}</button>`;
 
       const newEmail =  document.createElement("div");
       newEmail.innerHTML = `
         <div class = ""><h3>${email.subject.toUpperCase()}</h3></div>
         <div class = ""><strong>Sender: ${email.sender}</strong></br>&nbsp&nbsp&nbsp&nbsp&nbsp Recepient: ${email.recipients}</br>&nbsp&nbsp&nbsp&nbsp&nbsp ${email.timestamp}<hr></div>
         <div class = "mx-auto" id="body">${email.body}</div>
-        <button id = "archive">${archive_status}</butoon>
+        ${archiveButton}
         <button id="reply">Replay</button>
       `;
       newEmail.id = "email";
