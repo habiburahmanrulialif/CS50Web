@@ -33,10 +33,17 @@ function follow_counter(){
         nameDIV.innerHTML += `${data.result.account_name}`;
 
         if (currentUser){
-            followButtonDIV.innerHTML += `<button class="likeButton" onclick="follow_button()">${data.check ? 'unfollow' : 'follow'}</button>`
+            let account_name = data.result.account_name;
+            if (currentUser == account_name){
+                followButtonDIV.innerHTML += ``;
+            }
+            else{
+                followButtonDIV.innerHTML += `<button class="likeButton" onclick="follow_button()">${data.check ? 'unfollow' : 'follow'}</button>`;
+            }
+            
         }
         else{
-            followButtonDIV.innerHTML += `<a href="/login" class="loginButton"><button>follow</button></a>`
+            followButtonDIV.innerHTML += `<a href="/login" class="loginButton"><button>follow</button></a>`;
         }
 
         console.log(data)
