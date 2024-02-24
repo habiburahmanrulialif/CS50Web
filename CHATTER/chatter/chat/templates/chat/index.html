@@ -1,0 +1,215 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NETWORK</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="{% static 'chat/styles.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <body>
+        <div id="box" >
+            <div id="inner-box">
+                <div id="sidebar">
+                    <div id="profile">
+                        <!-- Load user profile -->
+                        <div id="profile">
+                            <div class="row g-0" id="profile-content">
+                                <div class="col-md-2" id="profile-image-container">
+                                    <img src="{% static "chat/images/no-image.jpg" %}" id="profile-image" alt="...">
+                                </div>
+                                <div class="col-md-10" id="profile-info-container">
+                                    <p id="profile-name">profile</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="navigation">
+                        <div id="search">
+                            <button class="search-button"><i class="fas fa-search"></i></button>
+                            <input type="text" placeholder="Search.." id="search-bar">
+                        </div>
+                        <div id="group-list">
+                            <!-- Load the group list here -->
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="group-card">
+                                <div class="row g-0" id="group-content">
+                                    <div class="col-md-2" id="group-image-container">
+                                        <img src="{% static "chat/images/no-image.jpg" %}" id="group-image" alt="...">
+                                    </div>
+                                    <div class="col-md-10" id="group-info-container">
+                                        <h5 id="group-info-title">title</h5>
+                                        <p id="group-info-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content">
+                    <div id="message-content">
+                        <div id="group-name">
+                            <!-- Load group name -->
+                            <h6 id="group-title">title</h6>
+                            <p id="group-member">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque assumenda ipsam ut quidem rem! Non assumenda nihil laboriosam est sequi reprehenderit quia eos, obcaecati sint nam blanditiis, libero incidunt repudiandae.</p>
+                        </div>
+                        <div id="message-data">
+                            <!-- load message -->
+                            <!-- Scrollable -->
+                            <div class="message-list-not-owner">
+                                <div class="message-sender">
+                                    asdas
+                                </div>
+                                <div class="message-content">
+                                    Lorem ipsum dolbror, sit amet consectetur adipisicing elit. Asperiores tempora voluptate saepe ullam beatae repellat unde officia labore iusto, perferendis rerum quisquam laudantium molestiae ab et. Numquam quisquam earum animi?
+                                </div>
+                            </div>
+                            <div class="message-list-owner">
+                                <div class="message-sender">
+                                    asdas
+                                </div>
+                                <div class="message-content">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores tempora voluptate saepe ullam beatae repellat unde officia labore iusto, perferendis rerum quisquam laudantium molestiae ab et. Numquam quisquam earum animi?
+                                </div>
+                            </div>
+                        </div>
+                        <div id="message-form" >
+                            <div id="message-form-container" >
+                                <!-- loading message form -->
+                                <form id="message-form-form">
+                                    <input type="text" id="message-form-text" placeholder="Add message here">
+                                    <button type="submit" id="message-form-button" ><i class="fas fa-paper-plane"></i></button>
+                                </form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="clear"></div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
+</html>
