@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'chat',
+    'api.apps.ApiConfig',
+    'frontend',
+    'rest_framework',
 
 
 
