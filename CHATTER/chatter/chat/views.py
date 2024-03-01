@@ -13,8 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
+@login_required
 def index(request):
-    return render(request, "chat/index.html")
+    return render(request, "chat/index.html", {'user':request.user})
 
 
 def login_view(request):
@@ -69,52 +70,72 @@ def register(request):
         return render(request, "chat/register.html")
 
 
-#Create group + initial member
+#Create group without member
 @csrf_exempt
 @api_view(['POST'])
 def create_group(request):
     if request.method == 'POST':
         serializer = GroupSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
+            instance.group_member.add(request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 #add member
 @api_view(['POST'])
-def add_member(request, groupId, userId):
-    group = get_object_or_404(Group, pk=groupId)
-    user = get_object_or_404(User, pk=userId)
+def add_member(request, groupName, userName):
+    group = get_object_or_404(Group,  group_name=groupName)
+    user = get_object_or_404(User, username=userName)
     group.group_member.add(user)
     group.update_newest_message_time()
     return Response(status=status.HTTP_200_OK)
 
 
-#retreieve group(id)
+#retreieve group
 @api_view(['GET'])
 def retrieve_group(request):
     if request.method == 'GET':
-        groups = Group.objects.filter(group_member=request.user)
+        groups = Group.objects.filter(group_member=request.user).order_by('-newest_message_time')
         serializer = GroupSerializer(groups, many=True)
-        content = {
-            'retrieve_group' : serializer.data,
-        }
-        return Response(content, content_type='application/json')
+        return Response(serializer.data, content_type='application/json')
 
 
 #retrieve chat
 @api_view(['GET'])
-def retrieve_chat(request):
+def retrieve_chat(request, groupName):
     if request.method == 'GET':
-        message = Message.objects.all()
+        group = get_object_or_404(Group, group_name=groupName)
+        message = Message.objects.filter(part_of_group=group)
         serializer = MessageSerializer(message, many=True)
-        content = {
-            'retrieve_chat' : serializer.data,
-        }
-        return Response(content, content_type='application/json')
+        return Response(serializer.data, content_type='application/json')
 
 
 #send chat
-def new_message(request, group_name):
-    pass
+@csrf_exempt
+@api_view(['POST'])
+def new_message(request, groupName):
+    if request.method == 'POST':
+        # Retrieve the group object
+        group = get_object_or_404(Group, group_name=groupName)
+
+        # Ensure the user sending the message is a member of the group
+        if request.user not in group.group_member.all():
+            return Response({'error': 'You are not a member of this group.'}, status=status.HTTP_403_FORBIDDEN)
+
+        # Retrieve message content from request data
+        message_content = request.data.get('content', '')
+
+        # Create a new message instance
+        message = Message(part_of_group=group, sender=request.user, message=message_content)
+        message.save()
+
+        # Update the newest message time of the group
+        group.update_newest_message_time()
+
+        # Serialize the message and send response
+        serializer = MessageSerializer(message)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response({'error': 'Only POST requests are allowed for this endpoint.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

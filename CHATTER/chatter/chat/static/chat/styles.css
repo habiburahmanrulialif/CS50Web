@@ -74,6 +74,40 @@ body {
     height: calc(100% - 67px);
     width: 100%;
     padding: 10px 10px;
+    position: relative;
+}
+
+#add-group {
+    position:absolute;
+	width:60px;
+	height:60px;
+    right: 20px;
+    bottom: 20px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
+
+.form-popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 25%;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
 }
 
 #search {
@@ -177,16 +211,23 @@ body {
 }
 
 #message-data {
-    background: url('/static/chat/images/bg-chat.jpg') 50%;
-    background-size: cover;
-    height: calc(100% - 134px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align messages to the left */
     padding: 0% 10px;
     overflow: auto;
+    height: calc(100% - 134px);
+    background: url('/static/chat/images/bg-chat.jpg') 50%;
+    background-size: cover;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .message-list-not-owner {
     background-color: #2C3840;
-    display: inline-block;
     min-width: 25%;
     max-width: 75%;
     margin: 10px;
@@ -196,13 +237,12 @@ body {
 
 .message-list-owner {
     background-color: #24A885;
-    display: inline-block;
     min-width: 25%;
     max-width: 75%;
     margin: 10px;
     padding: 5px 10px;
     border-radius: 10px;
-    float: right;
+    margin-left: auto;
 }
 
 #message-form {
