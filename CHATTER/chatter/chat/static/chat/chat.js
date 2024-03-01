@@ -1,10 +1,12 @@
 fetchGroup()
+
 function getCSRFToken() {
     const selectElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
     return selectElement.value;
 }
 
 function fetchGroup(){
+    document.querySelector('#group-list').innerHTML = '';
     fetch('group', {
         method: 'GET',
         headers: {
@@ -15,7 +17,6 @@ function fetchGroup(){
         groups.forEach(group => {
             console.log(group)
 
-            
         // Create div for each email
         const newGroup = document.createElement('div');
 
@@ -104,9 +105,9 @@ function changeGroupName(groupName, groupMember){
     const groupTitle = document.getElementById("group-title");
     const group_Member = document.getElementById("group-member");
     group_Member.textContent = "";
-
-
+    changeSendBtn(groupName);
     groupTitle.textContent = groupName;
+
     groupMember.forEach((member, index) => {
         const memberElement = document.createElement('span');
         memberElement.textContent = member;
@@ -120,8 +121,19 @@ function changeGroupName(groupName, groupMember){
     });
 }
 
+function clearForm(){
+    document.getElementById("groupNameInput").value = '';
+    const newMessage = document.getElementById("message-form-text").value = '';
+}
+
 function openForm(){
     document.getElementById("myForm").style.display = "block";
+    clearForm();
+}
+
+function closeForm(){
+    document.getElementById("myForm").style.display = "none";
+    clearForm();
 }
 
 function newGroup(){
@@ -139,17 +151,68 @@ function newGroup(){
         body: JSON.stringify(data)
     })
     .then(response => {
+        clearForm();
         if (response.ok) {
             // Handle success response
             console.log("Group created successfully.");
+            closeForm();
+            fetchGroup();
             // You can redirect or show a success message here
         } else {
             // Handle error response
             console.error("Error creating group.");
             // You can display an error message here
         }
+        clearForm()
     })
     .catch(error => {
         console.error("Error:", error);
     });
+}
+
+function sendMessage(groupName){
+    const newMessage = document.getElementById("message-form-text").value;
+    var data = {
+        content : newMessage
+    }
+    fetch(`group/${groupName}/newMessage`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken()
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response => {
+            clearForm();
+            if (response.ok) {
+                // Handle success response
+                console.log("Group created successfully.");
+                closeForm();
+                fetchGroup();
+                // You can redirect or show a success message here
+            } else {
+                // Handle error response
+                console.error("Error creating group.");
+                // You can display an error message here
+            }
+            clearForm()
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}
+
+function changeSendBtn(groupName) {
+    const formBtn = document.getElementById("message-form-button");
+
+    // Remove any existing click event listener
+    formBtn.removeEventListener('click', formBtn.clickEvent);
+
+    // Add a new click event listener
+    formBtn.clickEvent = function() {
+        sendMessage(groupName);
+    };
+
+    formBtn.addEventListener('click', formBtn.clickEvent);
 }

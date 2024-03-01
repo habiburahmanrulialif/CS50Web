@@ -43,13 +43,13 @@
                         <div class="form-popup" id="myForm">
                             <form action="" class="form-container">
                                 {% csrf_token %}
-                                <h1>Login</h1>
+                                <h1>CREATE NEW GROUP</h1>
                             
-                                <label for="groupNameInput"><b>Group Name</b></label>
+                                <label for="groupNameInput" style="margin-top: 40px;"><b>Group Name</b></label>
                                 <input type="text" placeholder="Enter Group Name" id="groupNameInput" required>
                             
-                                <button type="button" class="btn" onclick="newGroup()">Login</button>
-                                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                                <button type="button" id="btnCreate" class="btn" onclick="newGroup()">Create</button>
+                                <button type="button" id="btnClose" class="btn cancel" onclick="closeForm()">Close</button>
                             </form>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                 <!-- loading message form -->
                                 <form id="message-form-form">
                                     <input type="text" id="message-form-text" placeholder="Add message here">
-                                    <button type="submit" id="message-form-button" ><i class="fas fa-paper-plane"></i></button>
+                                    <button type="button" id="message-form-button"><i class="fas fa-paper-plane"></i></button>
                                 </form> 
                             </div>
                         </div>
