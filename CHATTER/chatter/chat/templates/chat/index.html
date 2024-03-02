@@ -58,8 +58,33 @@
                     <div id="message-content">
                         <div id="group-name">
                             <!-- Load group name -->
+                            <a href="#" id="sidebarControl" onclick="openSidebar()">
+                                <i class="fa fa-bars my-float-group"></i>
+                            </a>
                             <h6 id="group-title"></h6>
                             <p id="group-member"></p>
+                            <a href="#" id="add-member" >
+                                <i class="fa fa-plus my-float-group"></i>
+                            </a>
+                            <div class="form-popup" id="myMemberForm">
+                                <form action="" class="form-container">
+                                    {% csrf_token %}
+                                    <h1>ADD NEW MEMBER</h1>
+                                    <div
+                                        class="alert alert-primary"
+                                        role="alert"
+                                        id="alertMember"
+                                    >
+                                        <strong id="alertMemberContent">Alert Heading</strong>
+                                    </div>
+                                    
+                                    <label for="newMemberInput" style="margin-top: 40px;"><b>New Member</b></label>
+                                    <input type="text" placeholder="Enter New Member" id="newMemberInput" required>
+                                
+                                    <button type="button" id="btnNewMember" class="btn">Add Member</button>
+                                    <button type="button" id="btnClose" class="btn cancel" onclick="closeForm()">Close</button>
+                                </form>
+                            </div>
                         </div>
                         <div id="message-data">
                             <!-- load message -->

@@ -20,6 +20,7 @@ body {
 }
 
 #sidebar {
+    display: block;
     border-right: 1px solid #2C3840;
     float: left;
     width: 30%;
@@ -212,6 +213,42 @@ body {
     height: 67px;
     width: 100%;
     padding: 10px;
+    position: relative;
+}
+
+#add-member {
+    position:absolute;
+	width: 40px;
+	height: 40px;
+    right: 20px;
+    bottom: calc((67px - 40px)/2);
+	color:#FFF;
+    border-radius: 50px;
+	text-align:center;
+    align-items: center;
+    justify-content: center;
+}
+
+#sidebarControl {
+    display: none;
+    position:absolute;
+	width: 0px;
+	height: 40px;
+    left: 20px;
+    bottom: calc((67px - 40px)/2);
+	color:#FFF;
+    border-radius: 50px;
+	text-align:center;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    color: white;
+}
+
+#alertMember{
+    display: none;
 }
 
 #group-member {
@@ -220,6 +257,10 @@ body {
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
+}
+
+.my-float-group{
+	padding: 12px;
 }
 
 #message-data {
@@ -323,13 +364,20 @@ body {
 
 @media screen and (max-width: 1200px) {
     #sidebar {
-        border-right: 1px solid #2C3840;
-        float: left;
-        width: 0;
-        height: 100%;
-        overflow: hidden;
+        display: none;
+        width: 70%;
     }
 
+    #sidebarControl {
+        display: block;
+        width: 40px;
+        margin-left: -80px;
+    }
+
+    #group-name{
+        margin-left: 80px;
+    }
+    
     .search-button {
         position: absolute;
         background-color: inherit;
@@ -351,6 +399,17 @@ body {
         width: 100vw;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    #group-image-container {
+        width: 30%;
+    }
+    
+    #group-info-container {
+        width: 70%;
+    }
+}
+
 
 /* For WebKit based browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
