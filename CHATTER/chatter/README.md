@@ -10,10 +10,25 @@ I'm trying to make a single page application clone of whatsapp to chat between f
 * Live Chat on each group
 
 ## Distinctiveness and Complexity
-This page is kinda similiar to mail project, the main different is that in this page user would be able to converse live on the group chat with multiple people at once, which is the mail project wasnt capable of. 
+The main idea of this project is that i want to make a simple chatting app like Whatsapp that had the capability to chat on realtime, and not only on user to user but also inside a group chat. Base on that i decide to make CHATTER which is a simple clone on whatsapp but with limited capability. 
 
-In terms of complexity, I used Django with more than one model (explained below) and several javascript files to the frontend. 
-Moreover, all of the web application is responsive to the different screen sizes (mainly mobile phones and computers).
+On this project i decide to use Django as an API by utilizing django REST Framework. And on the frontend i decided to use the same old vanilla javascript. 
+
+On this project i tried to make a chatting app that can provide realtime chatting (or as close as it can be) with friend, at first i try to use websocket to acvieve this but in the end i decide to use fetch api to fetch data to django API each second to achieve this. Tho if the app getting bigger or if there's an increase in app capability i would change it to websocket.
+
+As per requirement, the website should be responsive. To achieve this i use my own CSS and utilize some bootstrap5 library.
+
+This website consist of 3 page which is login page, register page, and the main app page.
+
+Here some of the documentation :
+* Login page
+<br>
+
+<figure>
+    <img src="./chat/static/chat/images/demos/login.png" alt="Demo" height="600">
+    <figcaption>Login page</figcaption>
+</figure>
+<br>
 
 ## Files information
 

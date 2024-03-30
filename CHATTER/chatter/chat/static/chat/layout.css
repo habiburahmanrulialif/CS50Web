@@ -1,8 +1,11 @@
-#body{
-    background-color: white;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 5px;
-    padding: 20px;
-    width: 50vw;
-    min-height: 70vh;
+body{
+    background-color: black;
+}
+
+.row{
+    height: 100vh;
+}
+
+.body{
+    background-color: grey;
 }
