@@ -22,7 +22,7 @@ function fetchGroup(){
         groups.forEach(group => {
             console.log(group)
 
-        // Create div for each email
+        // Creating div for each group
         const newGroup = document.createElement('div');
 
         const imagePath = '/static/chat/images/no-image.jpg';
@@ -56,6 +56,7 @@ function fetchGroup(){
             groupInfoMember.appendChild(memberElement);
         });
 
+        // Adding event listener for each div
         newGroup.addEventListener('click', function() {
             stopInterval();
             fetchChat(group.group_name);
@@ -90,9 +91,9 @@ function fetchChat(groupName){
         const firstChatNode = messageContainer.firstChild;
         chats.forEach(chat => {
             console.log(chat)
-            const isCurrentUser = chat.sender === currentUser; // Change 'username' to the appropriate field if needed
+            const isCurrentUser = chat.sender === currentUser; // currentUser already created outside of chat,js. its in html script
 
-            // Create div for each email
+            // Creating div for each chat message
             const newChat = document.createElement('div');
             if (isCurrentUser) {
                 newChat.classList.add('message-list-owner');
@@ -110,18 +111,24 @@ function fetchChat(groupName){
                 </div>
             `;
 
+            // Insterting div before the firstchild to make the oldest chat as the firstchat. so the newest at the botton
             messageContainer.insertBefore(newChat, firstChatNode);
         });
     })
     .catch(error => console.error('Error:', error));
 }
 
+// to change group name when selecting a group div
 function changeGroupName(groupName, groupMember){
+
     document.getElementById("message-form").style.display = "block";
+
     const groupTitle = document.getElementById("group-title");
     const group_Member = document.getElementById("group-member");
     group_Member.textContent = "";
+
     changeSendBtn(groupName);
+
     groupTitle.textContent = groupName;
 
     groupMember.forEach((member, index) => {
@@ -234,7 +241,6 @@ function changeSendBtn(groupName) {
 
     // Add a new click event listener
     formBtn.clickEvent = function() {
-        
         sendMessage(groupName);
     };
 
@@ -260,10 +266,16 @@ function stopInterval(){
 
 function openNewMemberForm(groupName){
     document.getElementById("myMemberForm").style.display = 'block';
+
     const btnNewMember = document.getElementById("btnNewMember");
-    btnNewMember.addEventListener('click', function(){
+
+    btnNewMember.removeEventListener('click', btnNewMember.clickEvent);
+
+    btnNewMember.clickEvent = function() {
         newMember(groupName);
-    })
+    };
+
+    btnNewMember.addEventListener('click', btnNewMember.clickEvent);
 }
 
 function newMember(groupName){
@@ -320,5 +332,5 @@ function adjustSidebarDisplay() {
 // Initial adjustment
 adjustSidebarDisplay();
 
-// Event listener for window resize
+// Event listener for window resize so the page responsive
 window.addEventListener('resize', adjustSidebarDisplay);

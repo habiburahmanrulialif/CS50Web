@@ -32,6 +32,14 @@ body {
     padding: 0% 10px;
     align-items: center;
     display: flex;
+    position: relative;
+}
+
+#logout{
+    position:absolute;
+    right: 20px;
+	color:#FFF;
+	text-align:center;
 }
 
 #profile-content{
@@ -360,12 +368,38 @@ body {
         overflow: hidden; 
         text-overflow: ellipsis;
     }
+
+    #add-member {
+        position:absolute;
+        width: 40px;
+        height: 40px;
+        right: 40px;
+        bottom: calc((67px - 40px)/2);
+        color:#FFF;
+        border-radius: 50px;
+        text-align:center;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @media screen and (max-width: 1200px) {
     #sidebar {
         display: none;
         width: 70%;
+    }
+
+    #add-member {
+        position:absolute;
+        width: 40px;
+        height: 40px;
+        right: 80px;
+        bottom: calc((67px - 40px)/2);
+        color:#FFF;
+        border-radius: 50px;
+        text-align:center;
+        align-items: center;
+        justify-content: center;
     }
 
     #sidebarControl {
