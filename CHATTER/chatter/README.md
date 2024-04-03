@@ -25,7 +25,7 @@ Here some of the documentation :
 <br>
 
 <figure>
-    <img src="./chat/static/chat/images/demos/login.png" alt="Demo" height="600">
+    <img src="./chat/static/chat/images/demos/Login.png" alt="Demo" height="600">
     <figcaption>Login page</figcaption>
 </figure>
 <br>
