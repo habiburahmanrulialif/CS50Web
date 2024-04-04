@@ -31,14 +31,14 @@ Here some of the documentation :
 * Group Chat
 <br>
 <figure>
-    <img src="./chat/static/chat/images/demos/group+chat.png" alt="Demo" height="600">
+    <img src="./chat/static/chat/images/demos/group%20chat.png" alt="Demo" height="600">
 </figure>
 <br>
 
 * Group Chat Small
 <br>
 <figure>
-    <img src="./chat/static/chat/images/demos/group-chat-small.png" alt="Demo" height="600">
+    <img src="./chat/static/chat/images/demos/group%20chat%20small.png" alt="Demo" height="600">
 </figure>
 <br>
 
