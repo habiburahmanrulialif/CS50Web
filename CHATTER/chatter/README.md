@@ -25,15 +25,13 @@ Here some of the documentation :
 <br>
 <figure>
     <img src="./chat/static/chat/images/demos/Login.png" alt="Demo" height="600">
-    <figcaption>Login page</figcaption>
 </figure>
 <br>
 
 * Group Chat
 <br>
 <figure>
-    <img src="./chat/static/chat/images/demos/group-chat.png" alt="Demo" height="600">
-    <figcaption>Group Chat</figcaption>
+    <img src="./chat/static/chat/images/demos/group+chat.png" alt="Demo" height="600">
 </figure>
 <br>
 
@@ -41,7 +39,6 @@ Here some of the documentation :
 <br>
 <figure>
     <img src="./chat/static/chat/images/demos/group-chat-small.png" alt="Demo" height="600">
-    <figcaption>Group Chat Small</figcaption>
 </figure>
 <br>
 
