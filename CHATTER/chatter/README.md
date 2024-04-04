@@ -23,10 +23,25 @@ This website consist of 3 page which is login page, register page, and the main 
 Here some of the documentation :
 * Login page
 <br>
-
 <figure>
     <img src="./chat/static/chat/images/demos/Login.png" alt="Demo" height="600">
     <figcaption>Login page</figcaption>
+</figure>
+<br>
+
+* Group Chat
+<br>
+<figure>
+    <img src="./chat/static/chat/images/demos/group-chat.png" alt="Demo" height="600">
+    <figcaption>Group Chat</figcaption>
+</figure>
+<br>
+
+* Group Chat Small
+<br>
+<figure>
+    <img src="./chat/static/chat/images/demos/group-chat-small.png" alt="Demo" height="600">
+    <figcaption>Group Chat Small</figcaption>
 </figure>
 <br>
 
