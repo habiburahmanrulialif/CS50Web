@@ -1,6 +1,6 @@
 # CS50 WEB PROGRAMMING FINAL PROJECT: CHATTER
 
-The project video is: https://youtu.be/wMLGnSimtDY
+The project video is: https://youtu.be/sxh102LQq_0
 
 ## Main idea
 I'm trying to make a single page application clone of whatsapp to chat between friend. In this app there's the ability for user to chat realtime (with some delay). On this app user can create multiple group for each friend group they have. On this webpage user would be able to :
