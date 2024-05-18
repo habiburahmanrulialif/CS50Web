@@ -1,0 +1,17 @@
+.list-sizing {
+    max-height: 20rem;
+    display: block;
+}
+
+.card {
+    min-height: 20,5rem;
+    max-height: 20,5rem;
+    
+}
+
+.text-limit {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
